@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "818073158552",
+    "project_id": "travel-app-46fcd",
+    "storage_bucket": "travel-app-46fcd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818073158552:android:80551644f6c104b14721ed",
+        "android_client_info": {
+          "package_name": "com.example.trivo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818073158552-kn0bfjriatod3ccm811vta6aia75qndg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjcMzCfHMpnZ0TwWFEBDBbOWekjewlIzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818073158552-kn0bfjriatod3ccm811vta6aia75qndg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

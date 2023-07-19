@@ -1,17 +1,42 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/models/fb_model.dart';
+import 'dart:async';
 
 //Repo
 class Repository {
-   Future<void> fb_addDestination(DestinationFB destination) async {
+  Future<List<DestinationFB>> fetchalldatas() async {
+    final collection = FirebaseFirestore.instance.collection('Destinations');
+    final querysnapshot = await collection.get();
+    return querysnapshot.docs.map((doc) {
+      final data = doc.data();
+      return DestinationFB(
+          id: doc.id,
+          placeName: data['name'],
+          location: data['link'],
+          district: data['district'],
+          category: data['catogory'],
+          description: data['description'],
+          reachthere: data['moreInFo'],
+          image: List<String>.from(data['image']));
+    }).toList();
+  }
+
+  void getalldatas() async {
+    final destinations = await fetchalldatas();
+    dataListFromFirebase.value = destinations;
+  }
+
+  Future<void> fb_addDestination(DestinationFB destination) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference destinationList = firestore.collection('Destinations');
 
     DocumentReference newplaces = destinationList.doc();
-    List<String> url_s = await imageConverter(destination.image,destination.placeName);
+    List<String> url_s =
+        await imageConverter(destination.image, destination.placeName);
 
     Map<String, dynamic> placeDetails = {
       'name': destination.placeName,
@@ -21,25 +46,25 @@ class Repository {
       'district': destination.district,
       'catogory': destination.category,
       'id': newplaces.id,
-      'image':url_s
+      'image': url_s
     };
     await newplaces.set(placeDetails);
     print('submited');
   }
-//add image 
+//add image
 
   Future<List<String>> imageConverter(
-      List<XFile> imagesstring, String name) async {
+      List<String> imagesstring, String name) async {
     List<String> convertedURL = [];
 
     for (var img in imagesstring) {
-      String i= imgName(img.path);
+      String i = imgName(img);
       Reference toRoot = FirebaseStorage.instance.ref();
       Reference toDirectory = toRoot.child('destinationIMAGES');
       Reference toImage = toDirectory.child('$name/$i');
 
       try {
-        await toImage.putFile(File(img.path));
+        await toImage.putFile(File(img));
         final url = await toImage.getDownloadURL();
         convertedURL.add(url);
       } catch (e) {
@@ -48,6 +73,7 @@ class Repository {
     }
     return convertedURL;
   }
+
   String imgName(String img) {
     int j = 0;
     for (int i = img.length - 1; i >= 0; i--) {
@@ -59,35 +85,76 @@ class Repository {
     return img.substring(j);
   }
 
-
   //delete
-  Future<bool> deleteDoc(DestinationFB destination) async {
+  Future deleteDoc(String id) async {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     CollectionReference destinations = fireStore.collection('Destinations');
     try {
-      await destinations.doc(destination.id).delete();
-    } catch (e) { 
+      await destinations.doc(id).delete();
+    } catch (e) {
       return false;
     }
     return true;
   }
+
   //edit
-   Future<bool> editData(DestinationFB destination) async {
+  Future editData(DestinationFB destination) async {
     try {
       FirebaseFirestore fireStore = FirebaseFirestore.instance;
-      final dest = fireStore.collection('destinations').doc(destination.id);
+      final dest = fireStore.collection('Destinations').doc(destination.id);
       await dest.update({
         'name': destination.placeName,
         'catogory': destination.category,
         'description': destination.description,
         'location': destination.location,
-        // 'image': destination.image,
         'district': destination.district,
+        'moreInFo': destination.reachthere
       });
     } catch (e) {
-      print('---------------------------$e-----------------------');
+      print('$e');
       return false;
     }
     return true;
   }
+
+//filtering
+  Future<List<DestinationFB>> filteredDestinations(
+      {List<String>? selectedDistricts,
+      List<String>? selectedCategories}) async {
+    selectedDistricts ??= [];
+    selectedCategories ??= [];
+    final collections = FirebaseFirestore.instance.collection('Destinations');
+    Query query = collections;
+
+    if (selectedDistricts.isEmpty && selectedCategories.isEmpty) {
+      final querysnapshot = await query.get();
+      return querysnapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
+        return DestinationFB(
+            placeName: data['name'],
+            location: data['link'],
+            district: data['district'],
+            category: data['catogory'],
+            description: data['description'],
+            reachthere: data['moreInFo'],
+            image: List<String>.from(data['image']));
+      }).toList();
+    }
+    return [];
+  }
 }
+
+List<String>? selectedDistricts = [];
+List<String>? selectedCategories = [];
+getFiltered() async {
+  List<DestinationFB> filteredDestinations =
+      await Repository().filteredDestinations(
+        selectedCategories: selectedCategories,
+        selectedDistricts: selectedDistricts
+      );
+  filtered.value = filteredDestinations;
+
+}
+
+final ValueNotifier<List<DestinationFB>> filtered =
+    ValueNotifier<List<DestinationFB>>([]);

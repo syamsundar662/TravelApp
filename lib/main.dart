@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:trivo/database/models/data_model.dart';
+import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/firebase_options.dart';
 import 'package:trivo/screens/splashscreen.dart';
 
@@ -14,12 +13,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await Hive.initFlutter();
-  if (!Hive.isAdapterRegistered(DestinationAdapter().typeId)) {
-    Hive.registerAdapter(DestinationAdapter());
-  }
+  // await Hive.initFlutter();
+  // if (!Hive.isAdapterRegistered(DestinationAdapter().typeId)) {
+  //   Hive.registerAdapter(DestinationAdapter());
+  // }
+  // ignore: unused_local_variable
+  DataManager dataManager = DataManager();
+  // dataManager.getData();
   runApp(const App());
-  // await datawanttadd(); 
 }
 
 class App extends StatelessWidget {
@@ -33,7 +34,13 @@ class App extends StatelessWidget {
       theme: ThemeData(),
       home: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot) => snapshot.hasData ? GetStarted(logedin: true,) : GetStarted(logedin: false,)),
+          builder: (context, snapshot) => snapshot.hasData
+              ? GetStarted(
+                  logedin: true,
+                )
+              : GetStarted(
+                  logedin: false,
+                )),
     );
   }
 }

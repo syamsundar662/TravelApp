@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trivo/database/functions/Firebase/fdb_functions.dart';
+import 'package:trivo/database/functions/Firebase/fdb_auth.dart';
 import 'package:trivo/helper/size.dart';
 
 class signUp extends StatelessWidget {

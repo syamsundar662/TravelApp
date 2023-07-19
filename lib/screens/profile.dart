@@ -1,6 +1,4 @@
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:trivo/screens/Login_page.dart';
 import 'package:trivo/widgets/showdialogue.dart';
 
 class Profile extends StatefulWidget {

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import 'package:trivo/database/functions/Firebase/fdb_functions.dart';
+import 'package:trivo/database/functions/Firebase/fdb_auth.dart';
 import 'package:trivo/helper/size.dart';
 import 'package:trivo/screens/admin/screens/admin_page.dart';
 import 'package:trivo/screens/signup.dart';
+import 'package:trivo/widgets/bottomnavbar.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -48,12 +49,20 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Hey Mate!',
-                                style: TextStyle(
-                                    fontSize: 35,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w400),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Navbar()));
+                                },
+                                child: Text(
+                                  'Hey Mate!',
+                                  style: TextStyle(
+                                      fontSize: 35,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ),
                             ),
                             const Text(''),
@@ -124,48 +133,12 @@ class _LoginPageState extends State<LoginPage> {
                                     )),
                                   ),
                                 ),
-                                // InkWell(
-                                //   onTap: () async {
-                                //     _formkey.currentState!.validate();
-                                //     setState(() {
-                                //       loading = true;
-                                //     });
-                                //     loading
-                                //         ? CircularProgressIndicator()
-                                //         : checklog(context);
-                                //     await f_authentication()
-                                //         .signInWithEmailAndPassword(
-                                //             _gmailcontroller.text,
-                                //             _passwordcontroller.text,
-                                //             context);
-                                //     setState(() {
-                                //       loading = false;
-                                //     });
-                                //   },
-                                //   child: Container(
-                                //     width: screenWidth * .46,
-                                //     height: 52,
-                                //     decoration: BoxDecoration(
-                                //         color: Color.fromARGB(255, 0, 0, 0),
-                                //         borderRadius:
-                                //             BorderRadius.circular(10)),
-                                //     child: const Align(
-                                //         child: Text(
-                                //       'Login',
-                                //       style: TextStyle(
-                                //           color: Colors.white,
-                                //           fontSize: 20,
-                                //           fontWeight: FontWeight.w300),
-                                //     )),
-                                //   ),
-                                // ),
                                 loading
                                     ? SizedBox(
                                         width: screenWidth * .46,
                                         height: 53,
-                                        child: Expanded(
-                                            child: RiveAnimation.asset(
-                                                'assets/1326-2537-loading-dots.riv')),
+                                        child: RiveAnimation.asset(
+                                            'assets/1326-2537-loading-dots.riv'),
                                       )
                                     : Container(
                                         decoration: BoxDecoration(),
@@ -205,13 +178,21 @@ class _LoginPageState extends State<LoginPage> {
                             gap,
                             Align(
                               alignment: Alignment.center,
-                              child: Text(
-                                'Forgot password',
-                                style: TextStyle(
-                                    decoration: TextDecoration.underline,
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Adminhome()));
+                                },
+                                child: Text(
+                                  'Forgot password',
+                                  style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400),
+                                ),
                               ),
                             ),
                           ],
@@ -235,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
       print('match');
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => const Adminhome(),
+          builder: (context) =>  Adminhome(),
         ),
       );
     }

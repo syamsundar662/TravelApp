@@ -1,10 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/size.dart';
 import 'package:trivo/screens/fulldetails.dart';
+import 'package:trivo/database/functions/Firebase/db_manager.dart';
 
 class Explore extends StatelessWidget {
-  const Explore({Key? key});
+  Explore({Key? key});
+  final DataManager dataList = DataManager();
 
   @override
   Widget build(BuildContext context) {
@@ -14,203 +17,102 @@ class Explore extends StatelessWidget {
         child: SizedBox(
           height: screenHeight,
           width: screenWidth,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('Destinations').snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final allfiles = snapshot.data!.docs;
-                return GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 3 / 1.4,
-                    crossAxisCount: 1,
-                    crossAxisSpacing: 12.0,
-                    mainAxisSpacing: 12.0,
-                  ),
-                  itemCount: allfiles.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var data = allfiles[index];
-                    return Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(data['image'][0]),
-                            ),
-                            borderRadius: BorderRadius.circular(20),
+          child: ValueListenableBuilder<List<DestinationFB>>(
+            valueListenable: dataListFromFirebase,
+            builder: (BuildContext context, List<DestinationFB> value,
+                Widget? child) {
+              var dataEx = value;
+              return GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 3 / 1.4,
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 12.0,
+                  mainAxisSpacing: 12.0,
+                ),
+                itemCount: dataEx.length,
+                itemBuilder: (BuildContext context, int index) {
+                  var data = dataEx[index];
+                  return Stack(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: CachedNetworkImageProvider(data.image[0]),
                           ),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                            gradient: LinearGradient(
-                              begin: FractionalOffset.center,
-                              end: FractionalOffset.bottomCenter,
-                              colors: [
-                                const Color.fromARGB(255, 0, 0, 0).withOpacity(0.0),
-                                Colors.black.withOpacity(0.9),
-                              ],
-                              stops: const [0.0, 1.0],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15, bottom: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data['name'],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 25,
-                                    ),
-                                  ),
-                                  Text(
-                                    data['district'],
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(255, 231, 231, 231),
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DetailsPage(
-                                        index: index,
-                                        image: data['image'][0],
-                                        placeName: data['name'],
-                                        location: data['link'],
-                                        placedistrict: data['district'],
-                                        catogory: data['catogory'],
-                                        description: data['description'],
-                                        reach: data['moreInFo'],
-                                        // data: allfiles,
-                                        datas: data ,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_forward_ios_outlined,
-                                  color: Colors.white,
-                                ),
-                              ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          gradient: LinearGradient(
+                            begin: FractionalOffset.center,
+                            end: FractionalOffset.bottomCenter,
+                            colors: [
+                              const Color.fromARGB(255, 0, 0, 0)
+                                  .withOpacity(0.0),
+                              Colors.black.withOpacity(0.9),
                             ],
+                            stops: const [0.0, 1.0],
                           ),
                         ),
-                      ],
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                print('Error: ${snapshot.error}');
-              }
-              return const Center(child: CircularProgressIndicator());
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, bottom: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data.placeName,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 25,
+                                  ),
+                                ),
+                                Text(
+                                  data.district,
+                                  style: const TextStyle(
+                                    color: Color.fromARGB(255, 231, 231, 231),
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailsPage(
+                                      datas: data,
+                                    ),
+                                  ),
+                                );
+                              },
+                              icon: const Icon(
+                                Icons.arrow_forward_ios_outlined,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ),
       ),
     );
   }
-} 
-
-// builder: (context, List<Destination> list, child) {
-                  // return GridView.builder(
-                  //     gridDelegate:
-                  //         const SliverGridDelegateWithFixedCrossAxisCount(
-                  //             childAspectRatio: 3 / 1.4,
-                  //             crossAxisCount: 1,
-                  //             crossAxisSpacing: 12.0,
-                  //             mainAxisSpacing: 12.0),
-                  //     itemCount: list.length,
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       var data = list[index];
-                  //       return Stack(children: [
-                  //         Container(
-                  //           decoration: BoxDecoration(
-                  //             image: DecorationImage(
-                  //                 fit: BoxFit.cover,
-                  //                 image: FileImage(File(data.image[0]))),
-                  //             borderRadius: BorderRadius.circular(20),
-                  //           ),
-                  //         ),
-                  //         Container(
-                  //           decoration: BoxDecoration(
-                  //               borderRadius: BorderRadius.circular(20),
-                  //               color: Colors.white,
-                  //               gradient: LinearGradient(
-                  //                   begin: FractionalOffset.center,
-                  //                   end: FractionalOffset.bottomCenter,
-                  //                   colors: [
-                  //                     const Color.fromARGB(255, 0, 0, 0)
-                  //                         .withOpacity(0.0),
-                  //                     Colors.black.withOpacity(0.9),
-                  //                   ],
-                  //                   stops: const [
-                  //                     0.0,
-                  //                     1.0
-                  //                   ])),
-                  //         ),
-                  //         Padding(
-                  //           padding:
-                  //               const EdgeInsets.only(left: 15, bottom: 15),
-                  //           child: Row(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             crossAxisAlignment: CrossAxisAlignment.end,
-                  //             children: [
-                  //               Column(
-                  //                 mainAxisAlignment: MainAxisAlignment.end,
-                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                  //                 children: [
-                  //                   Text(
-                  //                     data.placeName,
-                  //                     style: const TextStyle(
-                  //                         color: Colors.white,
-                  //                         fontWeight: FontWeight.w500,
-                  //                         fontSize: 25),
-                  //                   ),
-                  //                   Text(
-                  //                     data.district,
-                  //                     style: const TextStyle(
-                  //                         color: Color.fromARGB(
-                  //                             255, 231, 231, 231),
-                  //                         fontSize: 15),
-                  //                   ),
-                  //                 ],
-                  //               ),
-                  //               IconButton(
-                  //                   onPressed: () {
-                  //                     Navigator.push(
-                  //                         context,
-                  //                         MaterialPageRoute(
-                  //                             builder: (context) => DetailsPage(
-                  //                                 index: index,
-                  //                                 image: data.image,
-                  //                                 placeName: data.placeName,
-                  //                                 location: data.location,
-                  //                                 placedistrict: data.district,
-                  //                                 catogory: data.category,
-                  //                                 description: data.description,
-                  //                                 reach: data.reachthere)));
-                  //                   },
-                  //                   icon: const Icon(
-                  //                     Icons.arrow_forward_ios_outlined,
-                  //                     color: Colors.white,
-                  //                   ))
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ]);
-                  //     });
+}

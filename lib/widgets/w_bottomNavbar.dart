@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:trivo/screens/explore.dart';
-import 'package:trivo/screens/favourites.dart';
-import 'package:trivo/screens/home_screen.dart';
-import 'package:trivo/screens/search_page.dart';
+import 'package:trivo/screens/screen_explore.dart';
+import 'package:trivo/screens/screen_favourites.dart';
+import 'package:trivo/screens/screen_home.dart';
+import 'package:trivo/screens/screen_searchpage.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -14,7 +14,7 @@ class Navbar extends StatefulWidget {
 class _NavbarState extends State<Navbar> {
   final _pageViewController = PageController();
   int currentindex = 0;
-  final _pages = [HomeScreen(), Searchpage(), Favorites(), Explore()];
+  final _pages = [const HomeScreen(), const Searchpage(), const Favorites(), Explore()];
   @override
   void dispose() {
     _pageViewController.dispose();
@@ -39,7 +39,7 @@ class _NavbarState extends State<Navbar> {
               });
             },
 
-            selectedItemColor: Color.fromARGB(255, 0, 0, 0),
+            selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
             unselectedItemColor: const Color.fromARGB(255, 150, 150, 150),
             iconSize: 22,
             type: BottomNavigationBarType.fixed,

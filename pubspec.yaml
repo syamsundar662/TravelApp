@@ -52,6 +52,7 @@ dependencies:
   cloud_firestore: ^4.8.2
   firebase_storage: ^11.2.4
   cached_network_image: ^3.2.3
+  liquid_pull_to_refresh: ^3.0.1
   
   
 dev_dependencies:

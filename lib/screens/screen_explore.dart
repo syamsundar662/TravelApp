@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/helper/size.dart';
-import 'package:trivo/screens/fulldetails.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
 
 class Explore extends StatelessWidget {
@@ -12,6 +12,18 @@ class Explore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(35),
+        child: AppBar(
+        
+          backgroundColor:Theme.of(context).scaffoldBackgroundColor ,
+          elevation: 0,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+          title: const Text('Explore',style: TextStyle(color: Colors.black,fontSize: 25),),
+          ),
+      ),
+      
       body: Padding(
         padding: const EdgeInsets.only(top: 0, left: 15, right: 15),
         child: SizedBox(

@@ -1,9 +1,8 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:trivo/helper/size.dart';
-import 'package:trivo/helper/styling.dart';
-import 'package:trivo/lists/trending.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/helper/helper_styling.dart';
+import 'package:trivo/lists/list_trendingplaces.dart';
 
 class CarouselSlidermain extends StatefulWidget {
   const CarouselSlidermain ({super.key});
@@ -35,7 +34,7 @@ class _CarouselSlidermainState extends State<CarouselSlidermain> {
                       child: Stack(children: [
                         Container(
                           width: double.infinity,
-                          margin: const EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.all(2),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20.0),
                             image: DecorationImage(

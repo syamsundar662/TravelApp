@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trivo/helper/size.dart';
-// import 'package:trivo/main.dart';
-import 'package:trivo/screens/Login_page.dart';
-import 'package:trivo/widgets/bottomnavbar.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/screens/screen_Login.dart';
+import 'package:trivo/widgets/w_bottomNavbar.dart';
 
 // ignore: must_be_immutable
 class GetStarted extends StatelessWidget {
@@ -14,14 +12,14 @@ class GetStarted extends StatelessWidget {
 
   check(context) async {
     if (logedin) {
-     await Future.delayed(Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 3));
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Navbar()));
+          context, MaterialPageRoute(builder: (context) => const Navbar()));
     } else {
-    await  Future.delayed(Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 3));
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 
@@ -39,20 +37,20 @@ class GetStarted extends StatelessWidget {
             //     image: AssetImage('assets/getstart.jpg'), fit: BoxFit.cover)
             ),
         child: Align(
-          alignment: Alignment(0.0, 0.0),
+          alignment: const Alignment(0.0, 0.0),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 190,
               ),
-              Expanded(
+              const Expanded(
                   child: RiveAnimation.asset(
                 'assets/4523-9190-moving-car.riv',
                 fit: BoxFit.contain,
               )),
               InkWell(
                 onTap: () {},
-                child: Text(
+                child: const Text(
                   'Travisor',
                   textAlign: TextAlign.center,
                   style: TextStyle(
@@ -62,12 +60,12 @@ class GetStarted extends StatelessWidget {
                   ),
                 ),
               ),
-              Text('The world at your finger tips.'),
-              SizedBox(
+              const Text('The world at your finger tips.'),
+              const SizedBox(
                 height: 12,
               ),
               gap,
-              SizedBox(
+              const SizedBox(
                 height: 80,
               ),
             ],

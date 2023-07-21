@@ -1,0 +1,243 @@
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:trivo/database/models/fb_model.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/helper/helper_styling.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+// ignore: must_be_immutable
+class DetailsPage extends StatelessWidget {
+   DetailsPage({
+    Key? key,
+    required this.datas,
+  }) : super(key: key);
+
+  
+    DestinationFB datas;
+   
+  @override
+  Widget build(BuildContext context) {  
+    List listImg = datas.image; 
+    return Scaffold(
+      backgroundColor: Colors.white, 
+
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: 1,
+      ),
+      body: SingleChildScrollView( 
+        physics: const ClampingScrollPhysics(),
+        child: Stack(
+          children: [
+          Container(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: screenHeight * .45,
+                  child: PageView.builder(  
+                    itemCount: listImg.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding( 
+                        padding: const EdgeInsets.symmetric(horizontal: 9),
+                        child: Container(
+                          height: screenHeight * 0.4, 
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20), 
+                              topLeft: Radius.circular(20), 
+                              topRight: Radius.circular(20),   
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,   
+                              image: CachedNetworkImageProvider(listImg[index]), 
+                            ),
+                          ),
+                          
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  children: [
+                   Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(240, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      datas.placeName,
+                                      style: bold3,
+                                    ),
+                                    gapW5, 
+                                    Text(
+                                      datas.category,
+                                      // style: medium,
+                                    ),
+                                  ],
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                    Icons.favorite_border_outlined,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'About',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                            Text(
+                              datas.description,
+                              textAlign: TextAlign.justify,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 144, 144, 144),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              'To reach there!',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                            Text(
+                              datas.reachthere,
+                              textAlign: TextAlign.justify,
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: Color.fromARGB(255, 144, 144, 144),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    const Padding(
+                      padding: EdgeInsets.only(left:10.0),
+                      child: Text(
+                        'Direction',
+                        style: bold2,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: GoogleMap(
+                                myLocationButtonEnabled: false, 
+                                myLocationEnabled: false, 
+                                
+                                initialCameraPosition: const CameraPosition(
+                                  target: LatLng(9.686181399999999,76.9052294),
+                                  zoom: 15,  
+                                ),
+                                markers: {
+                                  const Marker(
+                                    markerId: MarkerId('marker_id'),
+                                    position: LatLng(9.686181399999999,76.9052294),
+                                  ),
+                                },
+                              ),
+                            ),
+                             Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: InkWell(
+                                         onTap: () => launchGoogleMaps(datas.location),
+                                        child: Container(
+                                          height: 50,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              color: Color.fromARGB(195, 0, 0, 0),
+                                              borderRadius: BorderRadius.circular(10)),
+                                          child: const Align(
+                                              child: Text(
+                                            'Get direction',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                        ),
+                                      ),
+                                    ),
+                                 ) 
+                          ],
+                        ),
+                      ), 
+                    ),
+                  ], 
+                ),
+                verticalGap2  
+              ],
+            ),
+          ),
+            Padding(
+              padding: const EdgeInsets.only(left: 17 ,top: 10 ),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context); 
+                },
+                child: Container(
+                  height: 50, 
+                  width: 50 ,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30 ),
+                    color: const Color.fromARGB(201, 255, 255, 255)
+                  ),
+                  child: const Icon(Icons.arrow_back,size: 25,) 
+                ),
+              ),
+            ),
+        ]),
+      ),
+    );
+  }
+}
+
+
+
+void launchGoogleMaps(String locationLink) async {
+  // ignore: deprecated_member_use
+  if (await canLaunch(locationLink)) {
+    // ignore: deprecated_member_use
+    await launch(locationLink);
+  } else {
+    throw 'Could not launch $locationLink';
+  }
+}
+ 

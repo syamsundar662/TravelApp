@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/helper/size.dart';
-import 'package:trivo/helper/styling.dart';
-import 'package:trivo/screens/explore.dart';
-import 'package:trivo/screens/fulldetails.dart';
-import 'package:trivo/screens/profile.dart';
-import 'package:trivo/widgets/home_carousel1.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/helper/helper_styling.dart';
+import 'package:trivo/screens/screen_explore.dart';
+import 'package:trivo/screens/screen_fulldetails.dart';
+import 'package:trivo/screens/screen_profile.dart';
+import 'package:trivo/widgets/w_homeCarousel1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,18 +27,19 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false ,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         actions: [Padding(
-          padding: const EdgeInsets.only(right: 16),
+          padding: const EdgeInsets.only(right: 10),
           child: InkWell(
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Profile())),
-            child: Icon(
+            child: const Icon(
               Icons.account_circle,
               size: 30,
               color: Colors.black,
             ),
           ),
         ),],
-        title: Text(
+        centerTitle: true,
+        title: const Text(
               'Discover', 
               style: TextStyle(
                   fontSize: 27,
@@ -50,22 +51,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Container(
             color: Theme.of(context).scaffoldBackgroundColor,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, left: 18, right: 13),
+                const Padding(
+                  padding: EdgeInsets.only(top: 0, left: 18, right: 13),
                 ),
 
                 //main carousel slider---------start----------- (section 2)
                 const CarouselSlidermain(), 
-                //main carousel slide-----------end------------ (section 2)
+                 //main carousel slide-----------end------------ (section 2)
 
                 //section-------start---------(3)
                 Padding(
-                  padding: const EdgeInsets.only(left: 20),
+                  padding: const EdgeInsets.only(left: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -81,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     builder: (context) => Explore()));
                           },
                           child: const Padding(
-                            padding: EdgeInsets.only(right: 13, top: 5),
+                            padding: EdgeInsets.only(right: 10, top: 5),
                             child: Text(
                               'See all',
                               style: TextStyle(
@@ -101,14 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     valueListenable: dataListFromFirebase,
                     builder: (BuildContext context, List<DestinationFB> value,
                         Widget? child) {
-                      if (value.isEmpty) {
-                        return CircularProgressIndicator();
-                      }
+                      // if (value.isEmpty) {
+                      //   return CircularProgressIndicator();
+                      // }
                       var sampleData = value;
                       return Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
+                        padding: const EdgeInsets.only(left: 10, right: 10),
                         child: GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             childAspectRatio: 2 / 1.5,
@@ -176,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               style: const TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w400,
-                                                fontSize:19, 
+                                                fontSize:16, 
                                               ),
                                             ),
                                             Text(
@@ -189,8 +190,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ],
                                         ),
-                                       Padding(
-                                         padding: const EdgeInsets.only(right: 0 ,bottom: 8 ),
+                                       const Padding(
+                                         padding: EdgeInsets.only(right: 0 ,bottom: 8 ),
                                          child: Icon(
                                               Icons.arrow_forward_ios_outlined,
                                               color: Colors.white,size: 18,

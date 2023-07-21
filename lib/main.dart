@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/firebase_options.dart';
-import 'package:trivo/screens/splashscreen.dart';
+import 'package:trivo/screens/screen_splash.dart';
 
 const key_ = 'user in';
 

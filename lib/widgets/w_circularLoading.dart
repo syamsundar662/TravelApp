@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ShowLoading extends StatelessWidget {
+  const ShowLoading({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Loading View'),
+          title: const Text('Loading View'),
         ),
         body: Center(
           child: _circularProgressIndicator(),
@@ -13,6 +15,6 @@ class ShowLoading extends StatelessWidget {
   }
 
   Widget _circularProgressIndicator() {
-    return CircularProgressIndicator();
+    return const CircularProgressIndicator();
   }
 }

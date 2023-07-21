@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+import "package:flutter/material.dart";
 import 'package:rive/rive.dart';
-import 'package:trivo/database/functions/Firebase/fdb_auth.dart';
-import 'package:trivo/helper/size.dart';
-import 'package:trivo/screens/admin/screens/admin_page.dart';
-import 'package:trivo/screens/signup.dart';
-import 'package:trivo/widgets/bottomnavbar.dart';
+import 'package:trivo/database/functions/Firebase/db_authentication.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/screens/admin/screens/admin_homepage.dart';
+import 'package:trivo/screens/screen_signup.dart';
+import 'package:trivo/widgets/w_bottomNavbar.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -39,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
                   key: _formkey,
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 200,
+                      const SizedBox(
+                        height: 150,
                         width: 500,
                       ),
                       Padding(
@@ -48,32 +49,34 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: [
                             Align(
-                              alignment: Alignment.centerLeft,
+                              alignment: Alignment.center, 
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Navbar()));
+                                          builder: (context) => const Navbar()));
                                 },
-                                child: Text(
-                                  'Hey Mate!',
+                                child: const Text(
+                                  'Sign in',
                                   style: TextStyle(
                                       fontSize: 35,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w400),
+                                      fontWeight: FontWeight.w500 ),
                                 ),
                               ),
                             ),
+                            verticalGap2,
+                            verticalGap2,
                             const Text(''),
                             TextFormField(
                               controller: _gmailcontroller,
                               decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(0, 216, 137, 158),
+                                  fillColor: Color.fromARGB(98, 203, 204, 206),
                                   hintText: 'Gmail',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    // borderSide: BorderSide.none,
+                                    borderSide: BorderSide.none,
                                   ),
                                   filled: true),
                               validator: (value) {
@@ -88,11 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                             TextFormField(
                               controller: _passwordcontroller,
                               decoration: InputDecoration(
-                                fillColor: Color.fromARGB(0, 216, 137, 158),
+                                 fillColor: Color.fromARGB(98, 203, 204, 206),
                                 hintText: 'Password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  // borderSide: BorderSide.none,
+                                  borderSide: BorderSide.none,
                                 ),
                                 filled: true,
                               ),
@@ -106,43 +109,43 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             gap,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.center ,
                               children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (Context) => signUp()));
-                                  },
-                                  child: Container(
-                                    width: screenWidth * .46,
-                                    height: 52,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            style: BorderStyle.solid,
-                                            width: .6)),
-                                    child: const Align(
-                                        child: Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w300),
-                                    )),
-                                  ),
-                                ),
+                                // InkWell(
+                                //   onTap: () {
+                                //     Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //             builder: (context) => signUp()));
+                                //   },
+                                //   child: Container(
+                                //     width: screenWidth * .46,
+                                //     height: 52,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(10),
+                                //         border: Border.all(
+                                //             style: BorderStyle.solid,
+                                //             width: .6)),
+                                //     child: const Align(
+                                //         child: Text(
+                                //       'Sign up',
+                                //       style: TextStyle(
+                                //           color: Colors.black,
+                                //           fontSize: 20,
+                                //           fontWeight: FontWeight.w300),
+                                //     )),
+                                //   ),
+                                // ),
                                 loading
                                     ? SizedBox(
                                         width: screenWidth * .46,
                                         height: 53,
-                                        child: RiveAnimation.asset(
+                                        child: const RiveAnimation.asset(
                                             'assets/1326-2537-loading-dots.riv'),
                                       )
                                     : Container(
-                                        decoration: BoxDecoration(),
-                                        width: screenWidth * .46,
+                                        decoration: const BoxDecoration(),
+                                        width: screenWidth * .937 ,
                                         height: 53,
                                         child: ElevatedButton(
                                           onPressed: () async {
@@ -150,8 +153,8 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            checklog(context);
-                                            await f_authentication()
+                                            // checklog(context);
+                                            await F_authentication()
                                                 .signInWithEmailAndPassword(
                                                     _gmailcontroller.text,
                                                     _passwordcontroller.text,
@@ -160,22 +163,25 @@ class _LoginPageState extends State<LoginPage> {
                                               loading = false;
                                             });
                                           },
-                                          child: Text('Login'),
-                                          style: ButtonStyle(
+                                          style: ButtonStyle(  
+                                            elevation:  MaterialStatePropertyAll(0), 
                                               backgroundColor:
-                                                  MaterialStatePropertyAll(
-                                                      Colors.black),
+                                                  const MaterialStatePropertyAll(
+                                                      Color.fromARGB(177, 10, 124, 162)),
+                                                       //Color.fromARGB(180, 20, 121, 155)),
                                               shape: MaterialStatePropertyAll(
                                                   RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10)))),
+                                          child: const Text('Login'),
                                         ),
                                       ),
                               ],
                             ),
-                            gap,
-                            gap,
+                                verticalGap5 ,            
+                                verticalGap6,            
+                                verticalGap6,            
                             Align(
                               alignment: Alignment.center,
                               child: InkWell(
@@ -183,15 +189,23 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Adminhome()));
+                                          builder: (context) => const Adminhome()));
                                 },
-                                child: Text(
-                                  'Forgot password',
-                                  style: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => signUp()));
+                                  },
+                                  child: const Text(
+                                    'Dont have an account? SignUp',
+                                    style: TextStyle(
+                                        // decoration: TextDecoration.underline,
+                                        color: Color.fromARGB(177, 10, 124, 162),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
                               ),
                             ),
@@ -209,63 +223,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void checklog(context) async {
-    final username = _gmailcontroller.text;
-    final password = _passwordcontroller.text;
-    if (username == 'admin' && password == '123') {
-      print('match');
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) =>  Adminhome(),
-        ),
-      );
-    }
-  }
+  // void checklog(context) async {
+  //   final username = _gmailcontroller.text;
+  //   final password = _passwordcontroller.text;
+  //   if (username == 'admin' && password == '123') {
+  //     // ignore: avoid_print
+  //     print('match');
+  //     Navigator.of(context).pushReplacement(
+  //       MaterialPageRoute(
+  //         builder: (context) =>  const Adminhome(),
+  //       ),
+  //     );
+  //   }
+  // }
 }
-
-// const error =
-//     'Invalid gmail or password!';
-// ScaffoldMessenger.of(context)
-//     .showSnackBar(const SnackBar(
-//         behavior:
-//             SnackBarBehavior.floating,
-//         backgroundColor: Color.fromARGB(
-//             255, 238, 32, 32),
-//         margin: EdgeInsets.all(20),
-//         content: Text(error)));
-
-//       InkWell(
-//   onTap: () async {
-//     _formkey.currentState!.validate();
-//     setState(() {
-//       loading = true;
-//     });
-//     loading
-//         ? CircularProgressIndicator()
-//         : checklog(context);
-//     await f_authentication()
-//         .signInWithEmailAndPassword(
-//             _gmailcontroller.text,
-//             _passwordcontroller.text,
-//             context);
-//     setState(() {
-//       loading = false;
-//     });
-//   },
-//   child: Container(
-//     width: screenWidth * .46,
-//     height: 52,
-//     decoration: BoxDecoration(
-//         color: Color.fromARGB(255, 0, 0, 0),
-//         borderRadius:
-//             BorderRadius.circular(10)),
-//     child: const Align(
-//         child: Text(
-//       'Login',
-//       style: TextStyle(
-//           color: Colors.white,
-//           fontSize: 20,
-//           fontWeight: FontWeight.w300),
-//     )),
-//   ),
-// ),

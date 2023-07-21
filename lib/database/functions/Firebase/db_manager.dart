@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/screens/admin/screens/db_admin.dart';
-  ValueNotifier<List<DestinationFB>> dataListFromFirebase = ValueNotifier([]);
+
+ValueNotifier<List<DestinationFB>> dataListFromFirebase = ValueNotifier([]);
 
 class DataManager with ChangeNotifier {
   // Private constructor
   DataManager._() {
     getData();
   }
-
   // Singleton instance variable
   static final DataManager _instance = DataManager._();
 
@@ -19,13 +19,7 @@ class DataManager with ChangeNotifier {
 
   FirebaseFirestore fireStore = FirebaseFirestore.instance;
   Repository repo = Repository();
-
   List<DestinationFB> documentsFromFirebase = [];
-  //all
-
-  // ValueNotifier<List<DestinationFB>> popularDestination = ValueNotifier([]);
-
-  // ValueNotifier<List<DestinationFB>> searchDestination = ValueNotifier([]);
 
   Future getData() async {
     List<Map<String, dynamic>> list = await getAllCollectionDocs();
@@ -47,7 +41,8 @@ class DataManager with ChangeNotifier {
         list = value.docs.map((e) => e.data()).toList();
       });
     } on FirebaseException catch (e) {
-      print('=========================$e========================');
+      // ignore: avoid_print
+      print('--$e--');
     }
     return list;
   }
@@ -65,27 +60,25 @@ class DataManager with ChangeNotifier {
     );
   }
 
-Future<List<DestinationFB>> fetchalldatas() async{
-  final collection =FirebaseFirestore.instance.collection('Destinations');
-  final querysnapshot =await collection.get();
-  return querysnapshot.docs.map((doc){
-    final data = doc.data();
-    return DestinationFB(
-      id: doc.id,
-      placeName: data['name'],
-     location: data['location'],
-      district: data['district'],
-       category: data['catogory'],
-        description: data['description'],
-         reachthere: data['moreInFo'],
+  Future<List<DestinationFB>> fetchalldatas() async {
+    final collection = FirebaseFirestore.instance.collection('Destinations');
+    final querysnapshot = await collection.get();
+    return querysnapshot.docs.map((doc) {
+      final data = doc.data();
+      return DestinationFB(
+          id: doc.id,
+          placeName: data['name'],
+          location: data['location'],
+          district: data['district'],
+          category: data['catogory'],
+          description: data['description'],
+          reachthere: data['moreInFo'],
           image: List<String>.from(data['image']));
-  }).toList();
-}
+    }).toList();
+  }
 
-void getalldatas()async{
-  final destinations=await fetchalldatas();
-  dataListFromFirebase.value=destinations;
-}
-
-
+  void getalldatas() async {
+    final destinations = await fetchalldatas();
+    dataListFromFirebase.value = destinations;
+  }
 }

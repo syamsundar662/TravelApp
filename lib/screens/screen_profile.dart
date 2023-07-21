@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:trivo/widgets/showdialogue.dart';
+import 'package:trivo/widgets/w_showdialogue.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});

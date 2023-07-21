@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trivo/helper/size.dart';
-import 'package:trivo/lists/explore1.dart';
-import 'package:trivo/lists/trending.dart';
+import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/lists/list_test_explore.dart';
+import 'package:trivo/lists/list_trendingplaces.dart';
 
 
 class Favorites extends StatelessWidget {
@@ -11,9 +11,9 @@ class Favorites extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(30),
+        preferredSize: const Size.fromHeight(30),
         child: AppBar(
-        
+        centerTitle: true,
           backgroundColor:Theme.of(context).scaffoldBackgroundColor ,
           elevation: 0,
         automaticallyImplyLeading: false,

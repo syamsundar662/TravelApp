@@ -16,5 +16,5 @@ void size(BuildContext context){
  const verticalGap3 = SizedBox(height: 30,);
  const verticalGap4 = SizedBox(height: 40);
  const verticalGap5 = SizedBox(height: 50,);
- const verticalGap6 = SizedBox(height: 60,);
+ const verticalGap6 = SizedBox(height: 60,); 
  

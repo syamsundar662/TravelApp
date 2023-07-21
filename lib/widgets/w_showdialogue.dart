@@ -1,6 +1,6 @@
  import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:trivo/screens/Login_page.dart';
+import 'package:trivo/screens/screen_Login.dart';
 
 void signout(BuildContext context) async {
     showDialog(
@@ -20,14 +20,14 @@ void signout(BuildContext context) async {
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Color.fromARGB(255, 244, 67, 54)),
+                            const Color.fromARGB(255, 244, 67, 54)),
                     onPressed: () async {
 
 
                       FirebaseAuth.instance.signOut();
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                           (route) => false);
                     },
                     child: const Text('Yes')),
@@ -51,12 +51,12 @@ void signout(BuildContext context) async {
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            Color.fromARGB(255, 244, 67, 54)),
+                            Color.fromARGB(255, 7, 129, 229)),
                     onPressed: () async {
                       FirebaseAuth.instance.signOut();
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                           (route) => false);
                     },
                     child: const Text('Yes')),

@@ -1,5 +1,4 @@
 List<String> categories=[
-  'All',
   'Hills',
   'Beach',
   'Forest',

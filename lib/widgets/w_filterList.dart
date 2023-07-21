@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:trivo/lists/category.dart';
-import 'package:trivo/lists/districts.dart';
+import 'package:trivo/lists/list_categories.dart';
+import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/screens/admin/screens/db_admin.dart';
 
 // ignore: must_be_immutable
@@ -12,13 +12,13 @@ class FilterSelecter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox (
-      height: 50,
+      height: 40,
       child: ListView(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         children:List.generate(list.length, (index) => ListSelecterMaker(index: index, list: list))
           
-  ));}
+    ));}
   }
 
 
@@ -50,14 +50,20 @@ class _ListSelecterMakerState extends State<ListSelecterMaker> {
           getFiltered();
         });
       },
-      child: Container(
-        child: Text(categories[widget.index]),
-        decoration: widget.isSelected?BoxDecoration(
-          color: Colors.amber
-        ):BoxDecoration(
-          color: Colors.white
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Container(
+          width: 110,
+          decoration: widget.isSelected?BoxDecoration(
+             borderRadius: BorderRadius.circular(5),
+            color: Color.fromARGB(109, 3, 189, 206),
+          ):BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.blueGrey[100]
+          ),
+          child: Align(child: Text(categories[widget.index])),
+          
         ),
-    
       ),
     ):InkWell(
        onTap: () {
@@ -71,13 +77,20 @@ class _ListSelecterMakerState extends State<ListSelecterMaker> {
           getFiltered();
         });
       },
-      child: Container(
-         decoration: widget.isSelected?BoxDecoration(
-          color: Colors.amber
-        ):BoxDecoration(
-          color: Colors.white
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: Container(
+          width: 110,
+           decoration: widget.isSelected?BoxDecoration(
+             borderRadius: BorderRadius.circular(5),
+             color: Color.fromARGB(109, 3, 189, 206),
+          ):BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+
+            color: Colors.blueGrey[100]
+          ),
+          child: Align(child: Text(districts[widget.index])),
         ),
-        child: Text(districts[widget.index]),
       ),
     );
 

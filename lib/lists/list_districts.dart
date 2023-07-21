@@ -14,4 +14,3 @@ List<String> districts =[
   'Kannur',
   'Kasaragod'
 ];
-// List<String> selectedDistrict =[];

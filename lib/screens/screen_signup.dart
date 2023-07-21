@@ -1,6 +1,8 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
-import 'package:trivo/database/functions/Firebase/fdb_auth.dart';
-import 'package:trivo/helper/size.dart';
+import 'package:trivo/database/functions/Firebase/db_authentication.dart';
+import 'package:trivo/helper/helper_size.dart';
 
 class signUp extends StatelessWidget {
   signUp({super.key});
@@ -26,34 +28,33 @@ class signUp extends StatelessWidget {
                   key: _formkey,
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 190,
+                       SizedBox(
+                        height: screenHeight*.18,  
                       ),
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
                           children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
+                            const Align(
+                              alignment: Alignment.center ,
                               child: Text(
                                 'Sign up',
                                 style: TextStyle(
                                     fontSize: 35,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w400),
+                                    fontWeight: FontWeight.w500 ),
                               ),
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                            verticalGap5 , 
+                             
                             TextFormField(
                               controller: _gmailcontroller,
                               decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(0, 216, 137, 158),
+                                  fillColor: const Color.fromARGB(98, 203, 204, 206),
                                   hintText: 'Gmail',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    // borderSide: BorderSide.none,
+                                    borderSide: BorderSide.none,
                                   ),
                                   filled: true),
                               validator: (value) {
@@ -70,11 +71,11 @@ class signUp extends StatelessWidget {
                             TextFormField(
                               controller: _passwordcontroller,
                               decoration: InputDecoration(
-                                fillColor: Color.fromARGB(0, 216, 137, 158),
+                                fillColor: const Color.fromARGB(98, 203, 204, 206),
                                 hintText: 'Password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  // borderSide: BorderSide.none,
+                                  borderSide: BorderSide.none,
                                 ),
                                 filled: true,
                               ),
@@ -88,31 +89,35 @@ class signUp extends StatelessWidget {
                             ),
                             gap,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 InkWell(
                                   onTap: () async {
-                                    f_authentication().createGmailandPassword(
+                                    F_authentication().createGmailandPassword(
                                         _gmailcontroller.text,
                                         _passwordcontroller.text,
                                         context);
+                                       ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                  duration: Duration(seconds: 1), 
+                                  backgroundColor: Color.fromARGB(177, 10, 124, 162), 
+                                  content: Text('Successfully Created'))); 
                                   },
                                   child: Container(
-                                    width: screenWidth * .46,
-                                    height: 52,
+                                    width: screenWidth * .937,
+                                    height: 59,
                                     decoration: BoxDecoration(
-                                        color: Colors.black,
+                                        color: const Color.fromARGB(177, 10, 124, 162),
                                         borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            style: BorderStyle.solid,
-                                            width: .6)),
+                                        // border: Border.all(width: .6)
+                                            ),
                                     child: const Align(
                                         child: Text(
-                                      'Sign up',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w300),
+                                      'Sign up',selectionColor: Colors.white,
+                                      // style: TextStyle(
+                                      //     color: Colors.white,
+                                      //     fontSize: 20,
+                                      //     fontWeight: FontWeight.w300),
                                     )),
                                   ),
                                 ),

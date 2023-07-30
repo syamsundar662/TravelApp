@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/screens/admin/screens/db_admin.dart';
 import 'package:trivo/screens/screen_Login.dart';
 import 'package:trivo/widgets/w_bottomNavbar.dart';
 
@@ -13,21 +14,21 @@ class GetStarted extends StatelessWidget {
   check(context) async {
     if (logedin) {
       await Future.delayed(const Duration(seconds: 3));
-
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Navbar()));
     } else {
+      Repository().getRandomDestinations();
       await Future.delayed(const Duration(seconds: 3));
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 
-  // @override
   @override
   Widget build(BuildContext context) {
     size(context);
     check(context);
+    Repository().getRandomDestinations();
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -60,6 +61,7 @@ class GetStarted extends StatelessWidget {
                   ),
                 ),
               ),
+              // const Text('Your travel Advisor'),
               const Text('The world at your finger tips.'),
               const SizedBox(
                 height: 12,

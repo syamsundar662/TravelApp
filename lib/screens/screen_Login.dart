@@ -49,20 +49,21 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           children: [
                             Align(
-                              alignment: Alignment.center, 
+                              alignment: Alignment.center,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const Navbar()));
+                                          builder: (context) =>
+                                              const Navbar()));
                                 },
                                 child: const Text(
                                   'Sign in',
                                   style: TextStyle(
                                       fontSize: 35,
                                       color: Colors.black,
-                                      fontWeight: FontWeight.w500 ),
+                                      fontWeight: FontWeight.w500),
                                 ),
                               ),
                             ),
@@ -72,7 +73,8 @@ class _LoginPageState extends State<LoginPage> {
                             TextFormField(
                               controller: _gmailcontroller,
                               decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(98, 203, 204, 206),
+                                  fillColor:
+                                      const Color.fromARGB(98, 203, 204, 206),
                                   hintText: 'Gmail',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -91,7 +93,8 @@ class _LoginPageState extends State<LoginPage> {
                             TextFormField(
                               controller: _passwordcontroller,
                               decoration: InputDecoration(
-                                 fillColor: Color.fromARGB(98, 203, 204, 206),
+                                fillColor:
+                                    const Color.fromARGB(98, 203, 204, 206),
                                 hintText: 'Password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -109,33 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             gap,
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center ,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // InkWell(
-                                //   onTap: () {
-                                //     Navigator.push(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //             builder: (context) => signUp()));
-                                //   },
-                                //   child: Container(
-                                //     width: screenWidth * .46,
-                                //     height: 52,
-                                //     decoration: BoxDecoration(
-                                //         borderRadius: BorderRadius.circular(10),
-                                //         border: Border.all(
-                                //             style: BorderStyle.solid,
-                                //             width: .6)),
-                                //     child: const Align(
-                                //         child: Text(
-                                //       'Sign up',
-                                //       style: TextStyle(
-                                //           color: Colors.black,
-                                //           fontSize: 20,
-                                //           fontWeight: FontWeight.w300),
-                                //     )),
-                                //   ),
-                                // ),
                                 loading
                                     ? SizedBox(
                                         width: screenWidth * .46,
@@ -145,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                                       )
                                     : Container(
                                         decoration: const BoxDecoration(),
-                                        width: screenWidth * .937 ,
+                                        width: screenWidth * .937,
                                         height: 53,
                                         child: ElevatedButton(
                                           onPressed: () async {
@@ -153,7 +131,6 @@ class _LoginPageState extends State<LoginPage> {
                                             setState(() {
                                               loading = true;
                                             });
-                                            // checklog(context);
                                             await F_authentication()
                                                 .signInWithEmailAndPassword(
                                                     _gmailcontroller.text,
@@ -163,12 +140,14 @@ class _LoginPageState extends State<LoginPage> {
                                               loading = false;
                                             });
                                           },
-                                          style: ButtonStyle(  
-                                            elevation:  MaterialStatePropertyAll(0), 
+                                          style: ButtonStyle(
+                                              elevation:
+                                                  const MaterialStatePropertyAll(
+                                                      0),
                                               backgroundColor:
                                                   const MaterialStatePropertyAll(
-                                                      Color.fromARGB(177, 10, 124, 162)),
-                                                       //Color.fromARGB(180, 20, 121, 155)),
+                                                      Color.fromARGB(
+                                                          177, 10, 124, 162)),
                                               shape: MaterialStatePropertyAll(
                                                   RoundedRectangleBorder(
                                                       borderRadius:
@@ -179,9 +158,9 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                               ],
                             ),
-                                verticalGap5 ,            
-                                verticalGap6,            
-                                verticalGap6,            
+                            const SizedBox(
+                              height: 215,
+                            ),
                             Align(
                               alignment: Alignment.center,
                               child: InkWell(
@@ -189,7 +168,8 @@ class _LoginPageState extends State<LoginPage> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => const Adminhome()));
+                                          builder: (context) =>
+                                              const Adminhome()));
                                 },
                                 child: InkWell(
                                   onTap: () {
@@ -201,8 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                                   child: const Text(
                                     'Dont have an account? SignUp',
                                     style: TextStyle(
-                                        // decoration: TextDecoration.underline,
-                                        color: Color.fromARGB(177, 10, 124, 162),
+                                        color:
+                                            Color.fromARGB(177, 10, 124, 162),
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -222,18 +202,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  // void checklog(context) async {
-  //   final username = _gmailcontroller.text;
-  //   final password = _passwordcontroller.text;
-  //   if (username == 'admin' && password == '123') {
-  //     // ignore: avoid_print
-  //     print('match');
-  //     Navigator.of(context).pushReplacement(
-  //       MaterialPageRoute(
-  //         builder: (context) =>  const Adminhome(),
-  //       ),
-  //     );
-  //   }
-  // }
 }

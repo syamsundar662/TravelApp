@@ -1,4 +1,5 @@
 // ignore_for_file: avoid_print, camel_case_types
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/screens/admin/screens/admin_homepage.dart';
@@ -13,7 +14,7 @@ class F_authentication {
           .signInWithEmailAndPassword(email: email, password: password);
       // ignore: use_build_context_synchronously
 
-   email == 'admin@gmail.com' || password == 'admin@123'? 
+   email == 'admin@gmail.com' || password == 'admin@123'  ? 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Adminhome())):
 
@@ -38,12 +39,16 @@ class F_authentication {
   Future<void> createGmailandPassword(
       String email, String password, BuildContext context) async {
     try {
-      await FirebaseAuth.instance
+      final snap =await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       Navigator.push(
           context, MaterialPageRoute(builder: (Context) => LoginPage()));
+      saveUser(email, password, snap.user!.uid);
     } catch (e) {
       print("err");
     }
   }
+}
+saveUser(String email,String password,String id){
+  FirebaseFirestore.instance.collection('users').doc(id).set({'email':email,'password':password,'id':id});
 }

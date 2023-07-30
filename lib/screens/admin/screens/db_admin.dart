@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'dart:async';
 
 //Repository class
 class Repository {
-
   //for fetch all data
   Future<List<DestinationFB>> fetchalldatas() async {
     final collection = FirebaseFirestore.instance.collection('Destinations');
@@ -28,6 +28,7 @@ class Repository {
           image: List<String>.from(data['image']));
     }).toList();
   }
+
   void getalldatas() async {
     final destinations = await fetchalldatas();
     dataListFromFirebase.value = destinations;
@@ -77,6 +78,7 @@ class Repository {
     }
     return convertedURL;
   }
+
   String imgName(String img) {
     int j = 0;
     for (int i = img.length - 1; i >= 0; i--) {
@@ -131,23 +133,21 @@ class Repository {
 
 //for showing all datas default
     if (selectedDistricts.isEmpty && selectedCategories.isEmpty) {
+      final querysnapshot = await query.get();
+      return querysnapshot.docs.map((doc) {
+        var data = doc.data() as Map<String, dynamic>;
+        return DestinationFB(
+            placeName: data['name'],
+            location: data['link'],
+            district: data['district'],
+            category: data['catogory'],
+            description: data['description'],
+            reachthere: data['moreInFo'],
+            image: List<String>.from(data['image']));
+      }).toList();
+    }
 
-      // final querysnapshot = await query.get();
-      return [];
-      // querysnapshot.docs.map((doc) {
-      //   var data = doc.data() as Map<String, dynamic>;
-      //   return DestinationFB(
-      //       placeName: data['name'],
-      //       location: data['link'],
-      //       district: data['district'],
-      //       category: data['catogory'],
-      //       description: data['description'],
-      //       reachthere: data['moreInFo'],
-      //       image: List<String>.from(data['image']));
-      // }).toList();
-    } 
-    
-//filter by only categories 
+//filter by only categories
     else if (selectedCategories.isNotEmpty && selectedDistricts.isEmpty) {
       final querysnapshot =
           await query.where('catogory', whereIn: selectedCategories).get();
@@ -161,10 +161,10 @@ class Repository {
             description: data['description'],
             reachthere: data['moreInFo'],
             image: List<String>.from(data['image']));
-      }).toList(); 
+      }).toList();
     }
-//filter by only districts    
-     else if (selectedCategories.isEmpty && selectedDistricts.isNotEmpty) {
+//filter by only districts
+    else if (selectedCategories.isEmpty && selectedDistricts.isNotEmpty) {
       final querysnapshot =
           await query.where('district', whereIn: selectedDistricts).get();
       return querysnapshot.docs.map((doc) {
@@ -180,7 +180,7 @@ class Repository {
       }).toList();
     }
 //filter by both districts and categoties
-     else {
+    else {
       final querysnapshot =
           await query.where('district', whereIn: selectedDistricts).get();
 
@@ -202,18 +202,73 @@ class Repository {
       }).toList();
     }
   }
+
+// random
+  Future<List<DestinationFB>> fetchRandomDestinations() async {
+    Query query = collectionReference;
+
+    // Get the total number of documents in the collection
+    final QuerySnapshot snapshot = await query.get();
+    final totalDocuments = snapshot.size;
+
+    if (totalDocuments == 0) {
+      // Handle the case when the collection is empty
+      return [];
+    }
+
+    // Generate random indices to get six random documents
+    final random = Random();
+    final randomIndices = <int>{};
+    while (randomIndices.length < 6) {
+      randomIndices.add(random.nextInt(totalDocuments));
+    }
+
+    // Fetch exactly six random destinations
+    final randomDocs =
+        randomIndices.map((index) => snapshot.docs[index]).toList();
+
+    return randomDocs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+
+      return DestinationFB(
+          placeName: data['name'],
+          location: data['link'],
+          district: data['district'],
+          category: data['catogory'],
+          description: data['description'],
+          reachthere: data['moreInFo'],
+          image: List<String>.from(data['image']));
+    }).toList();
+  }
+
+  //random list
+  ////
+  Future<void> getRandomDestinations() async {
+    final List<DestinationFB> randomDestinations =
+        await fetchRandomDestinations();
+    random.value = randomDestinations;
+  }
+
+  ///
 }
 
 List<String>? selectedDistricts = [];
 List<String>? selectedCategories = [];
 getFiltered() async {
-  List<DestinationFB> filteredDestinations = await Repository().
-  filteredDestinations(selectedCategories: selectedCategories,selectedDistricts: selectedDistricts);
-  filtered.value = filteredDestinations;
+  List<DestinationFB> filteredDestinations = await Repository()
+      .filteredDestinations(
+          selectedCategories: selectedCategories,
+          selectedDistricts: selectedDistricts);
+  filtered.value = [...filteredDestinations];
+
+  filtered.notifyListeners();
 }
 
 //for notify filtered
-final ValueNotifier<List<DestinationFB>> filtered =ValueNotifier<List<DestinationFB>>([]);
+final ValueNotifier<List<DestinationFB>> filtered =
+    ValueNotifier<List<DestinationFB>>([]);
+final ValueNotifier<List<DestinationFB>> random =
+    ValueNotifier<List<DestinationFB>>([]);
 
-
- 
+final CollectionReference collectionReference =
+    FirebaseFirestore.instance.collection('Destinations');

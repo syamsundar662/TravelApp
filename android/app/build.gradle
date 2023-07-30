@@ -25,8 +25,8 @@ if (flutterVersionName == null) {
 android {
     namespace "com.example.trivo"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
-
+    ndkVersion "25.2.9519653"
+ 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

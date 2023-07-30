@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
@@ -11,8 +10,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
-class DetailsPage extends StatelessWidget {
-  DetailsPage({
+class SearchDetailsPage extends StatelessWidget {
+  SearchDetailsPage({
     Key? key,
     required this.datas,
   }) : super(key: key);
@@ -106,10 +105,10 @@ class DetailsPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              IconFavorite(
-                                destinationId: datas.id!,
-                                size: 25,
-                              ),
+                              // IconFavorite(
+                              //   destinationId: datas.id!,
+                              //   size: 25,
+                              // ),
                             ],
                           ),
                           const SizedBox(height: 8),

@@ -1,8 +1,7 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_districts.dart';
@@ -11,8 +10,6 @@ import 'package:trivo/screens/admin/screens/db_admin.dart';
 
 bool isListEmpty = true;
 bool load = false;
-// XFile? images;
-// File? _image;
 
 class AddPlaces extends StatefulWidget {
   const AddPlaces({
@@ -24,6 +21,7 @@ class AddPlaces extends StatefulWidget {
 }
 
 class _AddPlacesState extends State<AddPlaces> {
+  bool isLoading = false;
   final formkey = GlobalKey<FormState>();
 
   String? selectedDistrictvalue;
@@ -69,7 +67,6 @@ class _AddPlacesState extends State<AddPlaces> {
                           hintText: 'Place name',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            // borderSide: BorderSide.,
                           ),
                           filled: true),
                     ),
@@ -105,9 +102,9 @@ class _AddPlacesState extends State<AddPlaces> {
                       }).toList(),
                     ),
 
-                    //           //district dropdown
+                    //district dropdown
 
-                    //           //             //category dropdown
+                    //category dropdown
                     verticalGap1,
                     DropdownButtonFormField<String>(
                       decoration: const InputDecoration(
@@ -147,16 +144,66 @@ class _AddPlacesState extends State<AddPlaces> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
-                    IconButton(
-                        onPressed: () async {
-                          multiImagePicker();
-                        },
-                        icon: const Icon(Icons.image)),
-                    ElevatedButton(
-                        onPressed: () async {
-                          submitChecking(context);
-                        },
-                        child: const Text('submit'))
+                    TextButton.icon(
+                      icon: const Icon(Icons.add_circle_outline_sharp),
+                      label: const Text('Add images'),
+                      onPressed: () async {
+                        multiImagePicker();
+                      },
+                    ),
+
+                    Visibility(
+                      visible: pickedImages.isNotEmpty,
+                      child: SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: pickedImages.length,
+                          itemBuilder: (context, index) {
+                            return Stack(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    image: DecorationImage(
+                                        image: FileImage(
+                                            File(pickedImages[index].path)),
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 20,
+                                width: 20,
+                                decoration: BoxDecoration(
+                                    color: const Color.fromARGB(54, 23, 23, 23),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        pickedImages.removeAt(index);
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.close,
+                                      size: 14,
+                                    )),
+                              ),
+                            ]);
+                          },
+                        ),
+                      ),
+                    ),
+                    isLoading
+                        ? const CupertinoActivityIndicator()
+                        : ElevatedButton(
+                            onPressed: () async {
+                              submitChecking(context); 
+                            },
+                            child: const Text('submit')),
                   ],
                 ),
               ),
@@ -171,19 +218,6 @@ class _AddPlacesState extends State<AddPlaces> {
     return image;
   }
 //android
-
-// ==========ios===========
-  // Future<void> _pickImage() async {
-  //   final picker = ImagePicker();
-  //   final pickedImage = await picker.pickImage(source: ImageSource.gallery);
-
-  //   setState(() {
-  //     if (pickedImage != null) {
-  //       _image = File(pickedImage.path);
-  //     }
-  //   });
-  // }
-//ios
 
 //========Multiple image picker==========
   Future<void> multiImagePicker() async {
@@ -203,6 +237,9 @@ class _AddPlacesState extends State<AddPlaces> {
 
   void submitChecking(BuildContext context) async {
     Repository().getalldatas();
+    setState(() {
+      isLoading = true;
+    });
 
     if (placeNameController.text.isEmpty ||
         locationController.text.isEmpty ||
@@ -212,13 +249,14 @@ class _AddPlacesState extends State<AddPlaces> {
       showDialog(
         context: context,
         builder: (context) => const AlertDialog(
-          title: Text('Error'),
+          title: Text(
+            'Fields are empty!',
+          ),
         ),
       );
     } else {
       List<File> selectedpick = [];
       List<String> selectedpickpath = [];
-      // selectedpickpath.addAll(pickedImages.map((file) => file.path).toList());
       // ignore: avoid_function_literals_in_foreach_calls
       pickedImages.forEach((element) {
         selectedpickpath.add(File(element.path).path);
@@ -238,9 +276,15 @@ class _AddPlacesState extends State<AddPlaces> {
 
       await repos.fb_addDestination(destination);
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: const Text('Added successfully')));
-      clearform();
+          .showSnackBar(const SnackBar(content: Text('Added successfully')));
+      // clearform();
+      setState(() {
+        pickedImages.clear();
+      });
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   clearform() {

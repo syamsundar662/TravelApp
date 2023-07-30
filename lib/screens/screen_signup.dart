@@ -28,29 +28,29 @@ class signUp extends StatelessWidget {
                   key: _formkey,
                   child: Column(
                     children: [
-                       SizedBox(
-                        height: screenHeight*.18,  
+                      SizedBox(
+                        height: screenHeight * .18,
                       ),
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
                           children: [
                             const Align(
-                              alignment: Alignment.center ,
+                              alignment: Alignment.center,
                               child: Text(
                                 'Sign up',
                                 style: TextStyle(
                                     fontSize: 35,
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w500 ),
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
-                            verticalGap5 , 
-                             
+                            verticalGap5,
                             TextFormField(
                               controller: _gmailcontroller,
                               decoration: InputDecoration(
-                                  fillColor: const Color.fromARGB(98, 203, 204, 206),
+                                  fillColor:
+                                      const Color.fromARGB(98, 203, 204, 206),
                                   hintText: 'Gmail',
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -71,7 +71,8 @@ class signUp extends StatelessWidget {
                             TextFormField(
                               controller: _passwordcontroller,
                               decoration: InputDecoration(
-                                fillColor: const Color.fromARGB(98, 203, 204, 206),
+                                fillColor:
+                                    const Color.fromARGB(98, 203, 204, 206),
                                 hintText: 'Password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -93,27 +94,34 @@ class signUp extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () async {
+                                    _formkey.currentState!.validate();
                                     F_authentication().createGmailandPassword(
                                         _gmailcontroller.text,
                                         _passwordcontroller.text,
                                         context);
-                                       ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                                  duration: Duration(seconds: 1), 
-                                  backgroundColor: Color.fromARGB(177, 10, 124, 162), 
-                                  content: Text('Successfully Created'))); 
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            duration: Duration(seconds: 1),
+                                            backgroundColor: Color.fromARGB(
+                                                177, 10, 124, 162),
+                                            content:
+                                                Text('Successfully Created')));
                                   },
                                   child: Container(
                                     width: screenWidth * .937,
-                                    height: 59,
+                                    height: 53,
                                     decoration: BoxDecoration(
-                                        color: const Color.fromARGB(177, 10, 124, 162),
-                                        borderRadius: BorderRadius.circular(10),
-                                        // border: Border.all(width: .6)
-                                            ),
+                                      color: const Color.fromARGB(
+                                          177, 10, 124, 162),
+                                      borderRadius: BorderRadius.circular(10),
+                                      // border: Border.all(width: .6)
+                                    ),
                                     child: const Align(
                                         child: Text(
-                                      'Sign up',selectionColor: Colors.white,
+                                      'Sign up',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400),
                                       // style: TextStyle(
                                       //     color: Colors.white,
                                       //     fontSize: 20,

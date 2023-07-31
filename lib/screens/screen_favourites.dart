@@ -81,10 +81,11 @@ class _FavoritesState extends State<Favorites> {
                     : GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 3 / 2.8,
+                                childAspectRatio: 3 / 3,
                                 crossAxisCount: 2,
-                                crossAxisSpacing: 9.0,
-                                mainAxisSpacing: 3),
+                                crossAxisSpacing: 15,
+                                mainAxisSpacing: 5 ),
+                                
                         itemCount: favData.length,
                         itemBuilder: (BuildContext context, int index) {
                           var data = favData[index];
@@ -96,14 +97,14 @@ class _FavoritesState extends State<Favorites> {
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   color: Colors.white,
-                                  borderRadius: BorderRadius.circular(9),
+                                  borderRadius: BorderRadius.circular(15),
                                   boxShadow: const [
                                     BoxShadow(
                                         color:
                                             Color.fromARGB(255, 205, 205, 205),
-                                        blurRadius: 2,
-                                        spreadRadius: 0,
-                                        offset: Offset(1, 2),
+                                        blurRadius: 1 ,
+                                        spreadRadius: .5  ,
+                                        offset: Offset(0 , 0),
                                         blurStyle: BlurStyle.normal),
                                   ],
                                 ),
@@ -122,7 +123,7 @@ class _FavoritesState extends State<Favorites> {
                                           Text(
                                             data.placeName,
                                             style:
-                                                const TextStyle(fontSize: 17),
+                                                const TextStyle(fontSize: 15 ),
                                           ),
                                           IconFavorite(
                                             destinationId: data.id!,
@@ -135,16 +136,16 @@ class _FavoritesState extends State<Favorites> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          const Icon(
-                                            Icons.location_on,
-                                            size: 16,
-                                            color: Color.fromARGB(
-                                                163, 255, 153, 0),
-                                          ),
+                                          // const Icon(
+                                          //   Icons.location_on,
+                                          //   size: 16,
+                                          //   color: Color.fromARGB(
+                                          //       163, 255, 153, 0),
+                                          // ),
                                           Text(
                                             data.district,
                                             style:
-                                                const TextStyle(fontSize: 13),
+                                                const TextStyle(fontSize: 13,color: Colors.grey ),
                                           ),
                                         ],
                                       ),
@@ -153,7 +154,7 @@ class _FavoritesState extends State<Favorites> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.all(0),
+                                padding: const EdgeInsets.all(8),
                                 child: InkWell(
                                   onTap: () => Navigator.push(
                                       context,
@@ -164,17 +165,17 @@ class _FavoritesState extends State<Favorites> {
                                     height: screenHeight * .12,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Color.fromARGB(
-                                                255, 205, 205, 205),
-                                            blurRadius: 7,
-                                            blurStyle: BlurStyle.normal,
-                                            spreadRadius: 1,
-                                            offset: Offset(0, 5),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(9),
+                                        // boxShadow: const [
+                                        //   BoxShadow(
+                                        //     color: Color.fromARGB(
+                                        //         255, 205, 205, 205),
+                                        //     blurRadius: 7,
+                                        //     blurStyle: BlurStyle.normal,
+                                        //     spreadRadius: 1,
+                                        //     offset: Offset(0, 5),
+                                        //   )
+                                        // ],
+                                        borderRadius: BorderRadius.circular(13),
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: CachedNetworkImageProvider(

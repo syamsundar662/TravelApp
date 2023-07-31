@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 
 ValueNotifier<List<String>> selectedFilters = ValueNotifier<List<String>>([]);
 ValueNotifier<List<String>> selectedFiltershome =

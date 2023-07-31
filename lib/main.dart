@@ -31,7 +31,7 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Travel App',
         theme: ThemeData(),
-        home: StreamBuilder<User?>(
+        home:  StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) => snapshot.hasData
                 ? GetStarted(
@@ -40,7 +40,7 @@ class App extends StatelessWidget {
                 : GetStarted(
                     logedin: false,
                   )),
-      ),
+      ),  
     );
   }
 }

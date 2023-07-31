@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 
 class CarouselSlidermain extends StatefulWidget {
   const CarouselSlidermain({Key? key});

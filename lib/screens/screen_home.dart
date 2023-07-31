@@ -4,7 +4,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
 import 'package:trivo/widgets/w_homeCarousel1.dart';

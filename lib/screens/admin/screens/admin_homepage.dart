@@ -4,7 +4,7 @@ import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/admin/screens/admin_editPlaces.dart';
 import 'package:trivo/widgets/w_bottomNavbar.dart';
 import 'package:trivo/widgets/w_showdialogue.dart';

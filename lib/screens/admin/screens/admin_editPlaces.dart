@@ -3,7 +3,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 
 class EditPlaces extends StatefulWidget {
   const EditPlaces({Key? key, required this.destination}) : super(key: key);

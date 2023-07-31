@@ -14,7 +14,7 @@ class F_authentication {
           .signInWithEmailAndPassword(email: email, password: password);
       // ignore: use_build_context_synchronously
 
-   email == 'admin@gmail.com' || password == 'admin@123'  ? 
+   email == 'admin@gmail.com' || password == 'admina'  ? 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Adminhome())):
 

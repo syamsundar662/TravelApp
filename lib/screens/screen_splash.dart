@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:trivo/helper/helper_size.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/screen_Login.dart';
 import 'package:trivo/widgets/w_bottomNavbar.dart';
 
@@ -24,7 +24,7 @@ class GetStarted extends StatelessWidget {
     }
   }
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     size(context);
     check(context);

@@ -7,6 +7,7 @@ import 'package:trivo/screens/screen_favourites.dart';
 import 'package:trivo/screens/screen_home.dart';
 import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
+import 'package:trivo/screens/screen_tripPlan.dart';
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -22,9 +23,9 @@ class _NavbarState extends State<Navbar> {
   final pages = [
     const HomeScreen(),
     const Searchpage(),
+    const TripPage(),
     const Explore(),
     const Favorites(),
-    const Profile(),
   ];
 
   @override
@@ -85,6 +86,10 @@ class _NavbarState extends State<Navbar> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
+              icon: Icon(Icons.terrain_sharp),
+              label: 'Trips',
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.explore_outlined),
               label: 'Explore',
             ),
@@ -92,13 +97,6 @@ class _NavbarState extends State<Navbar> {
               icon: Icon(Icons.favorite_outline,
               ),
               label: 'Favourites',
-            ),
-            BottomNavigationBarItem(
-              backgroundColor: Colors.amber,
-              icon: Icon(
-                Icons.account_circle_outlined,
-              ),
-              label: 'Profile',
             ),
           ],
         ),

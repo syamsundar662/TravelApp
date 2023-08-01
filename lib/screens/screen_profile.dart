@@ -4,8 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_snackbars/enums/animate_from.dart';
+import 'package:smart_snackbars/smart_snackbars.dart';
 import 'package:trivo/database/functions/Firebase/profile.dart';
 import 'package:trivo/helper/helper_size.dart';
+import 'package:trivo/screens/admin/screens/admin_homepage.dart';
+import 'package:trivo/screens/profile_section/screen_aboutus.dart';
+import 'package:trivo/screens/profile_section/screen_contactus.dart';
+import 'package:trivo/screens/profile_section/screen_privacypolicy.dart';
+import 'package:trivo/screens/profile_section/screen_termsandconditions.dart';
 import 'package:trivo/widgets/w_showdialogue.dart';
 
 String umail = '';
@@ -65,9 +72,13 @@ class _ProfileState extends State<Profile> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
-          title: const Text(
-            'Profile',
-            style: TextStyle(color: Colors.black, fontSize: 20),
+          title: InkWell(
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const Adminhome())),
+            child: const Text(
+              'Profile',
+              style: TextStyle(color: Colors.black, fontSize: 20),
+            ),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -89,9 +100,45 @@ class _ProfileState extends State<Profile> {
                   await url.getuserimage();
                   setState(() {
                     url.imageURLdb;
+
+                    {
+                      SmartSnackBars.showCustomSnackBar(
+                        context: context,
+                        duration: const Duration(milliseconds: 1700),
+                        animateFrom: AnimateFrom.fromBottom, 
+                        distanceToTravel: 25 , 
+                        outerPadding: const EdgeInsets.all(0),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
+                          padding: const EdgeInsets.fromLTRB(16, 10, 23, 10),
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 0, 49, 122),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Your changes have been saved",
+                                    style: TextStyle(color: Colors.white),
+                                  )
+                                ],
+                              ),Text(
+                                'Close',
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    }
                   });
                 },
-                child: loading ? const CupertinoActivityIndicator() : const Text('Done'))
+                child: loading
+                    ? const CupertinoActivityIndicator()
+                    : const Text('Done'))
           ],
         ),
       ),
@@ -181,7 +228,7 @@ class _ProfileState extends State<Profile> {
                   Text(umail),
                   TextButton(
                     onPressed: () async {
-                      url.imageURLdb = null;
+                      url.imageURLdb = null; 
                       await _pickImage();
                     },
                     child: const Text('Add or edit avatar'),
@@ -196,45 +243,69 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Contact Us',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 56, 56, 56),
-                          fontWeight: FontWeight.w200),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ContactUsPage())),
+                      child: const Text(
+                        'Contact Us',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 56, 56, 56),
+                            fontWeight: FontWeight.w200),
+                      ),
                     ),
                     const Divider(
                       thickness: 1,
                     ),
                     const Text(''),
-                    const Text(
-                      'Terms and Conditions',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 56, 56, 56),
-                          fontWeight: FontWeight.w200),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TermsAndConditionsPage())),
+                      child: const Text(
+                        'Terms and Conditions',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 56, 56, 56),
+                            fontWeight: FontWeight.w200),
+                      ),
                     ),
                     const Divider(
                       thickness: 1,
                     ),
                     const Text(''),
-                    const Text(
-                      'Privacy Policy',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 56, 56, 56),
-                          fontWeight: FontWeight.w200),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PrivacyPolict())),
+                      child: const Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 56, 56, 56),
+                            fontWeight: FontWeight.w200),
+                      ),
                     ),
                     const Divider(
                       thickness: 1,
                     ),
                     const Text(''),
-                    const Text(
-                      'About Us',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color.fromARGB(255, 56, 56, 56),
-                          fontWeight: FontWeight.w200),
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AboutUsPage())),
+                      child: const Text(
+                        'About Us',
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color.fromARGB(255, 56, 56, 56),
+                            fontWeight: FontWeight.w200),
+                      ),
                     ),
                     const Divider(
                       thickness: 1,

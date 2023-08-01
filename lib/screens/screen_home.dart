@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
+import 'package:trivo/database/functions/Firebase/profile.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
+import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
 import 'package:trivo/widgets/w_homeCarousel1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -18,6 +20,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+ProfileFirebase urlimg =ProfileFirebase();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,16 +38,57 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(40),
-        child: AppBar(
+        child: AppBar(  
+          actions: [ 
+            urlimg.imageURLdb != null?
+            InkWell(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())),
+              child: Padding(
+                padding: EdgeInsets.only(right: 12 ),
+                child: CircleAvatar( 
+                  radius: 15 , 
+                  backgroundImage: CachedNetworkImageProvider(urlimg.imageURLdb!) ,
+                ),
+              ), 
+            ):
+            InkWell
+            ( 
+              
+              child: IconButton(onPressed: (){
+                
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
+              }, icon: Icon(Icons.account_circle,color: Colors.black ,size: 29,)))
+            // InkWell(
+            //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())),
+            //   child: Padding(
+            //     padding: EdgeInsets.only(right: 12 ),
+            //     child: CircleAvatar( 
+            //       radius: 15 ,
+            //       backgroundImage: AssetImage('assets/profile-icon-design-free-vector (1).jpg') ,
+            //     ),
+            //   ),
+            // ),
+          ],
           elevation: .2,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          centerTitle: true,
-          title: const Text(
-            'Discover',
-            style: TextStyle(
-                fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
-          ),
+          centerTitle: true ,
+          title: Row(
+
+            children : 
+            [
+              const Text(
+              'Discover',
+              style: TextStyle(
+                  fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+            ),
+            // SizedBox(width: 40,), 
+            //   const Text(
+            //   'Discover',
+            //   style: TextStyle(
+            //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+            // ),
+          ]),
         ),
       ),
       body: SafeArea(

@@ -261,6 +261,7 @@ getFiltered() async {
           selectedDistricts: selectedDistricts);
   filtered.value = [...filteredDestinations];
 
+  // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
   filtered.notifyListeners();
 }
 

@@ -55,6 +55,10 @@ dependencies:
   liquid_pull_to_refresh: ^3.0.1
   provider: ^6.0.5
   connectivity_plus: ^4.0.1
+  geocoder2: ^1.4.0
+  geolocator: ^9.0.2
+  http: ^0.13.6
+  smart_snackbars: ^1.0.0
   
   
 dev_dependencies:

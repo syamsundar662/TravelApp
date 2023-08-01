@@ -6,6 +6,7 @@ import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/admin/screens/admin_editPlaces.dart';
+import 'package:trivo/screens/admin/screens/map_try.dart';
 import 'package:trivo/widgets/w_bottomNavbar.dart';
 import 'package:trivo/widgets/w_showdialogue.dart';
 
@@ -35,7 +36,12 @@ class _AdminhomeState extends State<Adminhome> {
         automaticallyImplyLeading: false,
         title: const Text('Admin panel'),
         actions: [
-          TextButton(
+          IconButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MapSample()));  
+              },
+              icon: const Icon(Icons.map)),
+          TextButton( 
             onPressed: () {
               showDialog(
                   context: context,

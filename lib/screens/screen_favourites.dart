@@ -15,13 +15,26 @@ class Favorites extends StatefulWidget {
 }
 
 class _FavoritesState extends State<Favorites> {
+   bool _isLoading = true;
   @override
   void initState() {
     final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
     favoriteModel.initFavorites(currentUserId);
     super.initState();
     FavoriteModel().favoritesListenable;
+    _loadFavorites();
   }
+
+  void _loadFavorites() async {
+    final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
+    await favoriteModel.initFavorites(currentUserId);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +65,12 @@ class _FavoritesState extends State<Favorites> {
           child: RefreshIndicator(
             onRefresh: () async {
               await favoriteModel.initFavorites(currentUserId);
+              await _isLoading;
               setState(() {});
             },
-            child: ValueListenableBuilder<List<DestinationFB>>(
+            child:_isLoading? Center( 
+                    child: CircularProgressIndicator(),
+                  ): ValueListenableBuilder<List<DestinationFB>>(
               valueListenable: favoriteModel.favoritesListenable,
               builder:
                   (BuildContext context, List<DestinationFB> value, child) {
@@ -78,7 +94,8 @@ class _FavoritesState extends State<Favorites> {
                           ],
                         ),
                       )
-                    : GridView.builder(
+                    : 
+                     GridView.builder(
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 childAspectRatio: 3 / 3,
@@ -89,7 +106,9 @@ class _FavoritesState extends State<Favorites> {
                         itemCount: favData.length,
                         itemBuilder: (BuildContext context, int index) {
                           var data = favData[index];
-                          return Padding(
+                          return 
+                          
+                           Padding(
                             padding: const EdgeInsets.only(top: 10),
                             child: Stack(children: [
                               Container(

@@ -66,10 +66,10 @@ class _FavoritesState extends State<Favorites> {
           child: RefreshIndicator(
             onRefresh: () async {
               await favoriteModel.initFavorites(currentUserId);
-              await _isLoading;
+              _isLoading;
               setState(() {});
             },
-            child:_isLoading? Center( 
+            child:_isLoading? const Center( 
                     child: CircularProgressIndicator(),
                   ): ValueListenableBuilder<List<DestinationFB>>(
               valueListenable: favoriteModel.favoritesListenable,

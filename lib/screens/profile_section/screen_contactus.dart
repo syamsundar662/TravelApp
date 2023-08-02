@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 
 class ContactUsPage extends StatelessWidget {
+  const ContactUsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contact Us'),
+        title: const Text('Contact Us'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Contact Us',
               style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'We value your feedback and inquiries. If you have any questions, suggestions, or concerns related to Travisor - The Travel Advisor, feel free to contact us using the information below.\n',
               style: TextStyle(fontSize: 16.0),
             ),
@@ -35,21 +37,21 @@ class ContactUsPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, size: 24.0),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label,
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 4.0),
+              const SizedBox(height: 4.0),
               Text(
                 value,
-                style: TextStyle(fontSize: 14.0),
+                style: const TextStyle(fontSize: 14.0),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
             ],
           ),
         ),

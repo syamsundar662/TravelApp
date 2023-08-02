@@ -274,7 +274,8 @@ class _AddPlacesState extends State<AddPlaces> {
           district: selectedDistrictvalue!,
           category: selectedCategoryvalue!);
 
-      await repos.fb_addDestination(destination);
+      await repos.fbaddDestination(destination);
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Added successfully')));
       // clearform();

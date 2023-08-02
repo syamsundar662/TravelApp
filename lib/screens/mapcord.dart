@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-
 class LocationScreens extends StatefulWidget {
   const LocationScreens({super.key});
 
@@ -10,80 +9,88 @@ class LocationScreens extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreens> {
-   String _address = 'Loading...';
+    String address = 'Fetching...';
 
   @override
   void initState() {
     super.initState();
-    _checkLocationPermission();
+    _getLocationAndAddress();
   }
 
-  Future<void> _checkLocationPermission() async {
+  Future<void> _getLocationAndAddress() async {
+    bool serviceEnabled;
     LocationPermission permission;
-    // Check if location permissions are granted
-    if (!await Geolocator.isLocationServiceEnabled()) {
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
       setState(() {
-        _address = 'Location services are disabled.';
+        address = 'Location services are disabled.';
       });
       return;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
-      // Request location permissions if not granted
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
+      if (permission == LocationPermission.denied) {
         setState(() {
-          _address = 'Location permission denied.';
+          address = 'Location permissions are denied.';
         });
         return;
       }
     }
 
-    _getCurrentLocation();
-  }
+    if (permission == LocationPermission.deniedForever) {
+      setState(() {
+        address = 'Location permissions are permanently denied.';
+      });
+      return;
+    }
 
-  Future<void> _getCurrentLocation() async {
+    Position position;
     try {
-      // Get the current position (latitude and longitude)
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-
-      // Get the address from the latitude and longitude
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
-
-      // Format the address
-      Placemark placemark = placemarks.first;
-      String formattedAddress =
-          "${placemark.subThoroughfare} ${placemark.thoroughfare}, ${placemark.subLocality}, ${placemark.locality}, ${placemark.administrativeArea}, ${placemark.country}";
-
-      setState(() {
-        _address = formattedAddress;
-      });
-    } catch (e) { 
-      setState(() {
-        _address = 'Error: ${e.toString()}';
-      });
+      position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      await _getAddressFromLatLong(position);
+    } catch (e) {
+      // print('Error fetching location: $e');
     }
   }
 
+  Future<void> _getAddressFromLatLong(Position position) async {
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      setState(() {
+        address =
+            '${place.subLocality},${place.locality},${place.administrativeArea}';
+      });
+    } catch (e) { 
+      setState(() {
+        address = 'not available.';
+      }); 
+    }
+  }
+ 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('User Location and Address'),
-      ),
-      body: Center(
-        child: Text(
-          _address,
-          style: TextStyle(fontSize: 18),
-        ),
-      ),
-    );
-  }
+    return 
+       Padding(
+         padding: const EdgeInsets.only(left: 10 ),
+         child: Row(
+          // mainAxisAlignment: MainAxisAlignment.start   , 
+          // crossAxisAlignment: CrossAxisAlignment.center  ,
+           children: [
+            const Icon(Icons.my_location_outlined,color: Colors.orange  ,size: 22,), 
+             Text(
+             address, 
+             style: const TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w300  ),
+         
+           ),
+           ],
+         ),
+       ); 
+   
+  } 
 }

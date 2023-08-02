@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class proPicpage extends StatefulWidget {
-  const proPicpage({super.key});
+class ProPicpage extends StatefulWidget {
+  const ProPicpage({super.key});
 
   @override
-  State<proPicpage> createState() => _proPicpageState();
+  State<ProPicpage> createState() => _ProPicpageState();
 }
 
-class _proPicpageState extends State<proPicpage> {
+class _ProPicpageState extends State<ProPicpage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

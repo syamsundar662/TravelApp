@@ -11,10 +11,11 @@ class EditPlaces extends StatefulWidget {
   final DestinationFB destination;
 
   @override
-  _EditPlacesState createState() => _EditPlacesState();
+
+  EditPlacesState createState() => EditPlacesState();
 }
 
-class _EditPlacesState extends State<EditPlaces> {
+class EditPlacesState extends State<EditPlaces> {
   final formkey = GlobalKey<FormState>();
   String? selectedDistrictvalue;
   String? selectedCategoryvalue;
@@ -26,7 +27,6 @@ class _EditPlacesState extends State<EditPlaces> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     placeNameController =
         TextEditingController(text: widget.destination.placeName);

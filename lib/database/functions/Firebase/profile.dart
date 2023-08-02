@@ -24,7 +24,7 @@ ProfileFirebase._() ;
   Future<String?> uploadImageAndGetUrl(File imageFile) async {
     try {
       String fileName =
-          DateTime.now().millisecondsSinceEpoch.toString() + '.png';
+          '${DateTime.now().millisecondsSinceEpoch}.png';
       final ref = firebase_storage.FirebaseStorage.instance
           .ref()
           .child('user_profile_images')
@@ -72,7 +72,6 @@ ProfileFirebase._() ;
         await userDatas.doc(userId).get();
     if (docSnapshot.exists) {
       // Check if the document exists before accessing its data
-     
         querySnapshotData = docSnapshot.data();
         imageURLdb =querySnapshotData!['imageUrl'] as String ; 
 

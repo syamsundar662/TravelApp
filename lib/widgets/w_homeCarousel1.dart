@@ -6,7 +6,7 @@ import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 
 class CarouselSlidermain extends StatefulWidget {
-  const CarouselSlidermain({Key? key});
+  const CarouselSlidermain({super.key});
 
   @override
   State<CarouselSlidermain> createState() => _CarouselSlidermainState();
@@ -24,7 +24,7 @@ class _CarouselSlidermainState extends State<CarouselSlidermain> {
               height: screenHeight * .5,
               viewportFraction: .963,
               enlargeCenterPage: true,
-              autoPlay: true,
+              autoPlay: false,
               autoPlayInterval: const Duration(seconds: 3),
             ),
                       items: random.value.map((destination) { 

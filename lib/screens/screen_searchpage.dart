@@ -8,8 +8,8 @@ import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
-import 'package:trivo/screens/screen_searchFullscreen.dart';
-import 'package:trivo/widgets/w_filterList.dart';
+import 'package:trivo/screens/screen_searchfullscreen.dart';
+import 'package:trivo/widgets/w_filterlist.dart';
 
 class Searchpage extends StatefulWidget {
   const Searchpage({

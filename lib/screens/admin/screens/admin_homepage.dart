@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
@@ -24,7 +26,6 @@ class _AdminhomeState extends State<Adminhome> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Repository().getalldatas();
   }
@@ -38,7 +39,7 @@ class _AdminhomeState extends State<Adminhome> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MapSample()));  
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> MapSample()));  
               },
               icon: const Icon(Icons.map)),
           TextButton( 

@@ -104,13 +104,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:trivo/widgets/w_locationservice.dart';
 
 class MapSample extends StatefulWidget {
+  const MapSample({super.key});
+
   @override
   State<MapSample> createState() => MapSampleState();
 }
 
 class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller = Completer();
-  TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController = TextEditingController();
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -142,7 +144,7 @@ class MapSampleState extends State<MapSample> {
                   child: TextFormField(
                     controller: _textController,
                     textCapitalization: TextCapitalization.words,
-                    decoration: InputDecoration(hintText: 'Enter place'),
+                    decoration: const InputDecoration(hintText: 'Enter place'),
                     onChanged: (value) {
                       print(value);
                     },
@@ -160,14 +162,14 @@ class MapSampleState extends State<MapSample> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('Error'),
-                            content: Text('Place details could not be fetched.'),
+                            title: const Text('Error'),
+                            content: const Text('Place details could not be fetched.'),
                             actions: [
                               TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text('OK'),
+                                child: const Text('OK'),
                               ),
                             ],
                           );
@@ -175,7 +177,7 @@ class MapSampleState extends State<MapSample> {
                       );
                     }
                   },
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                 )
               ],
             ),

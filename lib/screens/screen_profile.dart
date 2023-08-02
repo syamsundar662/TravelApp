@@ -49,9 +49,9 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
+    final ImagePicker picker = ImagePicker();
     final XFile? pickedImage =
-        await _picker.pickImage(source: ImageSource.gallery);
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedImage != null) {
       setState(() {
@@ -247,7 +247,7 @@ class _ProfileState extends State<Profile> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ContactUsPage())),
+                              builder: (context) => const ContactUsPage())),
                       child: const Text(
                         'Contact Us',
                         style: TextStyle(
@@ -281,7 +281,7 @@ class _ProfileState extends State<Profile> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PrivacyPolict())),
+                              builder: (context) => const PrivacyPolict())),
                       child: const Text(
                         'Privacy Policy',
                         style: TextStyle(
@@ -298,7 +298,7 @@ class _ProfileState extends State<Profile> {
                       onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AboutUsPage())),
+                              builder: (context) => const AboutUsPage())),
                       child: const Text(
                         'About Us',
                         style: TextStyle(

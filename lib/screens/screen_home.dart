@@ -6,6 +6,7 @@ import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/screens/mapcord.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
@@ -20,13 +21,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-ProfileFirebase urlimg =ProfileFirebase();
+  ProfileFirebase urlimg = ProfileFirebase();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Repository().getRandomDestinations();
+    setState(() {
+      profileLoad(); 
+    });
+  }
+ 
+  void profileLoad()async{
+    await urlimg.getuserimage();
+      urlimg.imageURLdb;
+    
   }
 
   DataManager dataManager = DataManager();
@@ -37,58 +46,62 @@ ProfileFirebase urlimg =ProfileFirebase();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40),
-        child: AppBar(  
-          actions: [ 
-            urlimg.imageURLdb != null?
-            InkWell(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())),
-              child: Padding(
-                padding: EdgeInsets.only(right: 12 ),
-                child: CircleAvatar( 
-                  radius: 15 , 
-                  backgroundImage: CachedNetworkImageProvider(urlimg.imageURLdb!) ,
-                ),
-              ), 
-            ):
-            InkWell
-            ( 
-              
-              child: IconButton(onPressed: (){
-                
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile()));
-              }, icon: Icon(Icons.account_circle,color: Colors.black ,size: 29,)))
-            // InkWell(
-            //   onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Profile())),
-            //   child: Padding(
-            //     padding: EdgeInsets.only(right: 12 ),
-            //     child: CircleAvatar( 
-            //       radius: 15 ,
-            //       backgroundImage: AssetImage('assets/profile-icon-design-free-vector (1).jpg') ,
-            //     ),
-            //   ),
-            // ),
+        preferredSize: const Size.fromHeight(50),
+        child: AppBar(
+          actions: [
+            urlimg.imageURLdb != null
+                ? InkWell(
+                    onTap: ()  => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Profile())),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 14),
+                      child: CircleAvatar(
+                        radius: 18,
+                        backgroundImage:
+                            CachedNetworkImageProvider(urlimg.imageURLdb!),
+                      ),
+                    ),
+                  )
+                : InkWell(
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Profile()));
+                        },
+                        icon: const Icon(
+                          Icons.account_circle,
+                          color: Colors.black,
+                          size: 34,
+                        )))
           ],
-          elevation: .2,
+          elevation: .0,
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
-          centerTitle: true ,
-          title: Row(
-
-            children : 
-            [
-              const Text(
-              'Discover',
-              style: TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
-            ),
-            // SizedBox(width: 40,), 
-            //   const Text(
-            //   'Discover',
-            //   style: TextStyle(
-            //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
-            // ),
-          ]),
+          centerTitle: true,
+          title: const Row(
+            children: [
+              Text(
+                'Discover',
+                style: TextStyle(
+                    fontSize: 37,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+            ],
+          ),
+          //   const Text(
+          //   'Discover',
+          //   style: TextStyle(
+          //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+          // ),
+          // SizedBox(width: 40,),
+          //   const Text(
+          //   'Discover',
+          //   style: TextStyle(
+          //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
+          // ),
         ),
       ),
       body: SafeArea(
@@ -98,6 +111,10 @@ ProfileFirebase urlimg =ProfileFirebase();
             color: Colors.white,
             child: Column(
               children: [
+                const SizedBox(
+                  height: 0,
+                ),
+                const LocationScreens(),
 
                 //main carousel slider---------start----------- (section 2)
                 const CarouselSlidermain(),
@@ -125,8 +142,10 @@ ProfileFirebase urlimg =ProfileFirebase();
                     setState(() {
                       // catlog = true;
                     });
-                    await Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Searchpage()));
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Searchpage()));
                     setState(() {
                       catlog = false;
                     });

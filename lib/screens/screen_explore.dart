@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
@@ -99,19 +98,19 @@ class _ExploreState extends State<Explore> {
                                   ),
                                 ),
                               ),
-                              Positioned(
-                                top: 10,
-                                right: 10,
-                                child: CircleAvatar(
-                                    radius: 19,
-                                    backgroundColor:
-                                        const Color.fromARGB(76, 94, 94, 94),
-                                    foregroundColor: Colors.black,
-                                    child: IconFavorite(
-                                      destinationId: data.id!,
-                                      size: 23,
-                                    )),
-                              ),
+                              // Positioned(
+                              //   top: 10,
+                              //   right: 10, 
+                              //   child: CircleAvatar(
+                              //       radius: 19,
+                              //       backgroundColor:
+                              //           const Color.fromARGB(76, 94, 94, 94),
+                              //       foregroundColor: Colors.black,
+                              //       child: IconFavorite(
+                              //         destinationId: data.id!,
+                              //         size: 23,
+                              //       )),
+                              // ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: 15, bottom: 15),

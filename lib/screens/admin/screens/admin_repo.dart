@@ -35,7 +35,7 @@ class Repository {
   }
 
 //for all destination datas to firebase
-  Future<void> fb_addDestination(DestinationFB destination) async {
+  Future<void> fbaddDestination(DestinationFB destination) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     CollectionReference destinationList = firestore.collection('Destinations');
 

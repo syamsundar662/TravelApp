@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:rive/rive.dart';
 
 class MyRiveAnimation extends StatefulWidget {
+  const MyRiveAnimation({super.key});
+
   @override
   _MyRiveAnimationState createState() => _MyRiveAnimationState();
 }

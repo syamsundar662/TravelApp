@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
   class PrivacyPolict extends StatelessWidget {
+  const PrivacyPolict({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar( 
-        title: Text('Privacy Policy'),
+        title: const Text('Privacy Policy'),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Text(
           '''Welcome to Travisor - The Travel Advisor! This Privacy Policy outlines how we collect, use, disclose, and protect your personal information when you use our travel app, Travisor. We are committed to safeguarding your privacy and ensuring the security of your personal data. By using Travisor, you agree to the practices described in this Privacy Policy.

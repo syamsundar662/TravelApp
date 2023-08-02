@@ -15,9 +15,11 @@ class F_authentication {
       // ignore: use_build_context_synchronously
 
    email == 'admin@gmail.com' || password == 'admina'  ? 
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Adminhome())):
 
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const Navbar()));
 
@@ -41,8 +43,10 @@ class F_authentication {
     try {
       final snap =await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      // ignore: use_build_context_synchronously
       Navigator.push(
-          context, MaterialPageRoute(builder: (Context) => LoginPage()));
+          // ignore: non_constant_identifier_names
+          context, MaterialPageRoute(builder: (Context) => const LoginPage()));
       saveUser(email, password, snap.user!.uid);
     } catch (e) {
       print("err");

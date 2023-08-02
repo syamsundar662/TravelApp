@@ -5,7 +5,7 @@ import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/screens/screen_explore.dart';
 import 'package:trivo/screens/screen_favourites.dart';
 import 'package:trivo/screens/screen_home.dart';
-import 'package:trivo/screens/screen_profile.dart';
+
 import 'package:trivo/screens/screen_searchpage.dart';
 import 'package:trivo/screens/screen_tripPlan.dart';
 

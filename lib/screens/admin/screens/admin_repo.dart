@@ -241,7 +241,7 @@ class Repository {
     }).toList();
   }
 
-  //random list
+  //random list 
   ////
   Future<void> getRandomDestinations() async {
     final List<DestinationFB> randomDestinations =

@@ -29,7 +29,7 @@ class GetStarted extends StatelessWidget {
   Widget build(BuildContext context) {
     size(context);
     check(context);
-    Repository().getRandomDestinations();
+    // Repository().getRandomDestinations();
     return Scaffold(
       body: Container(
         width: double.infinity,

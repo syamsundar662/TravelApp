@@ -59,6 +59,9 @@ dependencies:
   geolocator: ^9.0.2
   http: ^0.13.6
   smart_snackbars: ^1.0.0
+  table_calendar: ^3.0.9
+  geocoding: ^2.1.0
+  permission_handler: ^10.4.3
   
   
 dev_dependencies:

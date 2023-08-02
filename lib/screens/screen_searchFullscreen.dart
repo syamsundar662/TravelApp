@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';

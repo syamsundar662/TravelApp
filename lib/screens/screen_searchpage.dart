@@ -3,12 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/admin_fullDetails.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/screen_searchFullscreen.dart';
 import 'package:trivo/widgets/w_filterList.dart';
@@ -90,7 +88,7 @@ class _SearchpageState extends State<Searchpage> {
             }).toList();
 
             return dataEx.isEmpty
-                ? const Center(child: Text('No result!'))
+                ? const Center(child:CircularProgressIndicator( ))
                 : Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
                     child: RefreshIndicator(

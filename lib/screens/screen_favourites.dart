@@ -16,10 +16,11 @@ class Favorites extends StatefulWidget {
 
 class _FavoritesState extends State<Favorites> {
    bool _isLoading = true;
+
   @override
   void initState() {
-    final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
-    favoriteModel.initFavorites(currentUserId);
+    // final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
+    // favoriteModel.initFavorites(currentUserId);
     super.initState();
     FavoriteModel().favoritesListenable;
     _loadFavorites();

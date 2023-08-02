@@ -11,7 +11,7 @@ class GetStarted extends StatelessWidget {
 
   bool logedin;
 
-  check(context) async {
+  check(context) async {  
     if (logedin) {
 
       await Future.delayed(const Duration(seconds: 3));

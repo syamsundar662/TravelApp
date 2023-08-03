@@ -14,21 +14,21 @@ class GetStarted extends StatelessWidget {
   check(context) async {  
     if (logedin) {
 
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 4));
       Navigator.pushAndRemoveUntil(
           context, MaterialPageRoute(builder: (context) => const Navbar()),(route)=>false);
-    } else {
+    } else { 
       Repository().getRandomDestinations();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 4  ));
       Navigator.pushAndRemoveUntil(
           context, MaterialPageRoute(builder: (context) => const LoginPage()),(route)=>false);
     }
   }
-
+ 
   @override 
   Widget build(BuildContext context) {
-    size(context);
     check(context);
+    size(context);
     // Repository().getRandomDestinations();
     return Scaffold(
       body: Container(

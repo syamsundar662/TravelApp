@@ -6,7 +6,7 @@ import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
-import 'package:trivo/screens/mapcord.dart';
+import 'package:trivo/widgets/w_currentlocation.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
@@ -27,15 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Repository().getRandomDestinations();
-    setState(() {
-      profileLoad(); 
-    });
+      profileLoad();
   }
- 
-  void profileLoad()async{
-    await urlimg.getuserimage();
+   
+   profileLoad(){  
+    setState(() {
       urlimg.imageURLdb;
-    
+     urlimg.getuserimage();
+    });
   }
 
   DataManager dataManager = DataManager();
@@ -45,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
+      appBar: PreferredSize( 
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
           actions: [
@@ -54,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: ()  => Navigator.push(context,
                         MaterialPageRoute(builder: (context) => const Profile())),
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 14),
+                      padding: const EdgeInsets.only(right: 16),
                       child: CircleAvatar(
                         radius: 18,
                         backgroundImage:

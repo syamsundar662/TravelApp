@@ -14,10 +14,10 @@ class _LocationScreenState extends State<LocationScreens> {
   @override
   void initState() {
     super.initState();
-    _getLocationAndAddress();
+    getLocationAndAddress();
   }
 
-  Future<void> _getLocationAndAddress() async {
+  Future<void> getLocationAndAddress() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -51,13 +51,13 @@ class _LocationScreenState extends State<LocationScreens> {
     try {
       position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
-      await _getAddressFromLatLong(position);
+      await getAddressFromLatLong(position);
     } catch (e) {
       // print('Error fetching location: $e');
     }
   }
 
-  Future<void> _getAddressFromLatLong(Position position) async {
+  Future<void> getAddressFromLatLong(Position position) async {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
@@ -77,12 +77,12 @@ class _LocationScreenState extends State<LocationScreens> {
   Widget build(BuildContext context) {
     return 
        Padding(
-         padding: const EdgeInsets.only(left: 10 ),
+         padding: const EdgeInsets.only(left: 0 ),
          child: Row(
-          // mainAxisAlignment: MainAxisAlignment.start   , 
-          // crossAxisAlignment: CrossAxisAlignment.center  ,
+          mainAxisAlignment: MainAxisAlignment.center    ,  
+          // crossAxisAlignment: CrossAxisAlignment.center  ,   
            children: [
-            const Icon(Icons.my_location_outlined,color: Colors.orange  ,size: 22,), 
+            const Icon(Icons.my_location_outlined,color: Colors.orange  ,size: 15,), 
              Text(
              address, 
              style: const TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w300  ),

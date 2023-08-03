@@ -9,6 +9,7 @@ import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/screens/screen_searchfullscreen.dart';
+import 'package:trivo/widgets/w_currentlocation.dart';
 import 'package:trivo/widgets/w_filterlist.dart';
 
 class Searchpage extends StatefulWidget {
@@ -42,14 +43,16 @@ class _SearchpageState extends State<Searchpage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(136),
+        preferredSize: const Size.fromHeight(149),
         child: SafeArea(
           bottom: false,
           child: AppBar(
             flexibleSpace: Column(
+              crossAxisAlignment: CrossAxisAlignment.center  ,
               children: [
+                LocationScreens(),   
                 const SizedBox(
-                  height: 54,
+                  height: 53,
                 ),
                 FilterSelecter(
                   list: categories,
@@ -66,12 +69,15 @@ class _SearchpageState extends State<Searchpage> {
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             elevation: 0,
-            title: CupertinoSearchTextField(
-              controller: _searchController,
-              onChanged: (value) async {
-                await getFiltered();
-                setState(() {});
-              },
+            title: Padding(
+              padding: const EdgeInsets.only(top: 20,),
+              child: CupertinoSearchTextField(
+                controller: _searchController,
+                onChanged: (value) async {
+                  await getFiltered();
+                  setState(() {});
+                },
+              ),
             ),
           ),
         ),

@@ -11,33 +11,29 @@ class Favorites extends StatefulWidget {
   const Favorites({Key? key}) : super(key: key);
 
   @override
-  State<Favorites> createState() => _FavoritesState();
+  State<Favorites> createState() => FavoritesState();
 }
 
-class _FavoritesState extends State<Favorites> {
+class FavoritesState extends State<Favorites> {
+  FavoriteModel fav =FavoriteModel();
    bool _isLoading = true;
 
   @override
   void initState() {
     // final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
     // favoriteModel.initFavorites(currentUserId);
+    loadFavorites(); 
     super.initState();
-    FavoriteModel().favoritesListenable;
-    _loadFavorites();
+    fav.favoritesListenable ;
   }
-
-  void _loadFavorites() async {
+   loadFavorites() async {
     final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
     await favoriteModel.initFavorites(currentUserId);
     setState(() {
       _isLoading = false;
     });
   }
-
-
-
-
-  @override
+  @override 
   Widget build(BuildContext context) {
     final favoriteModel = Provider.of<FavoriteModel>(context);
     FavoriteModel().initFavorites(currentUserId);

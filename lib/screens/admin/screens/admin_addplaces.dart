@@ -31,6 +31,8 @@ class _AddPlacesState extends State<AddPlaces> {
   final descriptionController = TextEditingController();
   final locationController = TextEditingController();
   final reachthereController = TextEditingController();
+  final latcontroller = TextEditingController();
+  final loncontroller = TextEditingController();
 
   Repository repos = Repository();
 
@@ -144,6 +146,24 @@ class _AddPlacesState extends State<AddPlaces> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
+                    verticalGap1,
+                    TextField(
+                      controller: reachthereController,
+                      decoration: InputDecoration(
+                        hintText: 'Lat',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                    verticalGap1,
+                    TextField(
+                      controller: reachthereController,
+                      decoration: InputDecoration(
+                        hintText: 'Log',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
                     TextButton.icon(
                       icon: const Icon(Icons.add_circle_outline_sharp),
                       label: const Text('Add images'),
@@ -245,7 +265,9 @@ class _AddPlacesState extends State<AddPlaces> {
         locationController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         pickedImages.isEmpty ||
-        reachthereController.text.isEmpty) {
+        reachthereController.text.isEmpty ||
+        latcontroller.text.isEmpty||
+        loncontroller.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => const AlertDialog(

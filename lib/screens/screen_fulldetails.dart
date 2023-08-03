@@ -16,7 +16,9 @@ class DetailsPage extends StatelessWidget {
     Key? key,
     required this.datas,
   }) : super(key: key);
-  DestinationFB datas;
+  DestinationFB datas; 
+  double lat = 9.686181399999999; 
+  double log = 76.9052294; 
   @override
   Widget build(BuildContext context) {
     final favoriteModel = Provider.of<FavoriteModel>(context);
@@ -170,15 +172,15 @@ class DetailsPage extends StatelessWidget {
                             child: GoogleMap(
                               myLocationButtonEnabled: false,
                               myLocationEnabled: false,
-                              initialCameraPosition: const CameraPosition(
-                                target: LatLng(9.686181399999999, 76.9052294),
+                              initialCameraPosition:  CameraPosition(
+                                target: LatLng(lat,log), 
                                 zoom: 15,
-                              ),
-                              markers: {
-                                const Marker(
-                                  markerId: MarkerId('marker_id'),
+                              ), 
+                              markers: { 
+                                 Marker(
+                                  markerId: const MarkerId('marker_id'),
                                   position:
-                                      LatLng(9.686181399999999, 76.9052294),
+                                      LatLng(lat,log),
                                 ),
                               },
                             ),

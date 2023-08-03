@@ -6,10 +6,10 @@ class MyRiveAnimation extends StatefulWidget {
   const MyRiveAnimation({super.key});
 
   @override
-  _MyRiveAnimationState createState() => _MyRiveAnimationState();
+  MyRiveAnimationState createState() => MyRiveAnimationState();
 }
 
-class _MyRiveAnimationState extends State<MyRiveAnimation> {
+class MyRiveAnimationState extends State<MyRiveAnimation> {
   Artboard? _artboard;
   RiveAnimationController? controller;
 

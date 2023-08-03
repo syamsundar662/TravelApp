@@ -14,14 +14,14 @@ class F_authentication {
           .signInWithEmailAndPassword(email: email, password: password);
       // ignore: use_build_context_synchronously
 
-   email == 'admin@gmail.com' || password == 'admina'  ? 
+   email == 'admin@gmail.com'  ?  
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Adminhome())):
+      Navigator.pushAndRemoveUntil( 
+          context, MaterialPageRoute(builder: (context) => const Adminhome()),(route)=>false):
 
       // ignore: use_build_context_synchronously
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const Navbar()));
+      Navigator.pushAndRemoveUntil(
+          context, MaterialPageRoute(builder: (context) => const Navbar()),(route)=>false);
 
     } on FirebaseAuthException catch (e) {
       print(e);

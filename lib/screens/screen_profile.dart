@@ -104,7 +104,7 @@ class _ProfileState extends State<Profile> {
                     {
                       SmartSnackBars.showCustomSnackBar(
                         context: context,
-                        duration: const Duration(milliseconds: 1700),
+                        duration: const Duration(milliseconds: 1800),
                         animateFrom: AnimateFrom.fromBottom, 
                         distanceToTravel: 25 , 
                         outerPadding: const EdgeInsets.all(0),

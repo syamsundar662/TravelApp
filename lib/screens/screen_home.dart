@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/functions/Firebase/profile.dart';
@@ -5,6 +6,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
+import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
 import 'package:trivo/widgets/w_currentlocation.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
@@ -22,18 +24,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ProfileFirebase urlimg = ProfileFirebase();
+  bool loadpro =true;
 
   @override
   void initState() {
     super.initState();
     Repository().getRandomDestinations();
-      profileLoad();
+    profileLoad();
   }
-   
-   profileLoad(){  
+
+  void profileLoad() async {
     setState(() {
+      loadpro =true;
       urlimg.imageURLdb;
-     urlimg.getuserimage();
+    });
+    await urlimg.getuserimage();
+    setState(() {
+      loadpro =false;
     });
   }
 
@@ -44,36 +51,64 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: PreferredSize( 
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
           actions: [
-            urlimg.imageURLdb != null
-                ? InkWell(
-                    onTap: ()  => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Profile())),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16),
-                      child: CircleAvatar(
-                        radius: 18,
+            // urlimg.imageURLdb != null
+            //     ? InkWell(
+            //         onTap: ()  => Navigator.push(context,
+            //             MaterialPageRoute(builder: (context) => const Profile())),
+            //         child: Padding(
+            //           padding: const EdgeInsets.only(right: 16),
+            //           child: CircleAvatar(
+            //             radius: 18,
+            //             backgroundImage:
+            //                 CachedNetworkImageProvider(urlimg.imageURLdb!),
+            //           ),
+            //         ),
+            //       )
+            //     : IconButton(
+            //         onPressed: () {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) => const Profile()));
+            //         },
+            //         icon: const Icon(
+            //           Icons.account_circle,
+            //           color: Colors.black,
+            //           size: 34,  
+            //         ))
+            loadpro ? SizedBox( 
+              child: Center(child: Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: CupertinoActivityIndicator (),
+              ))):
+            IconButton(
+              onPressed: () async {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => const Profile(),
+                  ),
+                ); 
+              },
+              icon: urlimg.imageURLdb != null
+                  ? Padding( 
+                    padding: const EdgeInsets.only(right: 0),
+                    child: CircleAvatar(
+                        radius: 36,
                         backgroundImage:
                             CachedNetworkImageProvider(urlimg.imageURLdb!),
                       ),
-                    ),
                   )
-                : InkWell(
-                    child: IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Profile()));
-                        },
-                        icon: const Icon(
-                          Icons.account_circle,
-                          color: Colors.black,
-                          size: 34,
-                        )))
+                  : const Icon(
+                      Icons.account_circle,
+                      color: Colors.black,
+                      size: 34,
+                    ),
+            )
           ],
           elevation: .0,
           automaticallyImplyLeading: false,

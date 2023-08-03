@@ -57,6 +57,8 @@ class DataManager with ChangeNotifier {
       image: List<String>.from(document['image']),
       reachthere: document['moreInFo'],
       id: document['id'],
+      longitude: document['lon'],
+      latitude: document['lat']
     );
   }
 
@@ -73,6 +75,8 @@ class DataManager with ChangeNotifier {
           category: data['catogory'],
           description: data['description'],
           reachthere: data['moreInFo'],
+          latitude: data['lat'],
+          longitude: data['lon'],
           image: List<String>.from(data['image']));
     }).toList();
   }

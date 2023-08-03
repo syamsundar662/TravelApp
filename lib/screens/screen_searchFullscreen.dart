@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
+import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
@@ -21,6 +22,10 @@ class SearchDetailsPage extends StatelessWidget {
     final favoriteModel = Provider.of<FavoriteModel>(context);
     favoriteModel.initFavorites(currentUserId);
     List listImg = datas.image;
+
+
+      double lat = double.parse(datas.latitude ?? '');
+      double lon = double.parse(datas.longitude ?? ''); 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -105,10 +110,10 @@ class SearchDetailsPage extends StatelessWidget {
                                   ),  
                                 ],
                               ),
-                              // IconFavorite(
-                              //   destinationId: datas.id!,
-                              //   size: 25,
-                              // ),
+                              IconFavorite(
+                                destinationId: datas.id!,
+                                size: 25,
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8),
@@ -169,15 +174,15 @@ class SearchDetailsPage extends StatelessWidget {
                             child: GoogleMap(
                               myLocationButtonEnabled: false,
                               myLocationEnabled: false,
-                              initialCameraPosition: const CameraPosition(
-                                target: LatLng(9.686181399999999, 76.9052294),
+                              initialCameraPosition:  CameraPosition(
+                                target: LatLng(lat, lon), 
                                 zoom: 15,
                               ),
                               markers: {
-                                const Marker(
+                                 Marker(
                                   markerId: MarkerId('marker_id'),
                                   position:
-                                      LatLng(9.686181399999999, 76.9052294),
+                                      LatLng(lat, lon),
                                 ),
                               },
                             ),

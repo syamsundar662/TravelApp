@@ -34,11 +34,14 @@ class _AddPlacesState extends State<AddPlaces> {
   final latcontroller = TextEditingController();
   final loncontroller = TextEditingController();
 
+
   Repository repos = Repository();
 
   final picker = ImagePicker();
   List<XFile> pickedImages = [];
 
+  // String latitudetext =latcontroller.text;
+  // String longitudetext = loncontroller.text;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -146,9 +149,9 @@ class _AddPlacesState extends State<AddPlaces> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
-                    verticalGap1,
+                    verticalGap1, 
                     TextField(
-                      controller: reachthereController,
+                      controller: latcontroller,
                       decoration: InputDecoration(
                         hintText: 'Lat',
                         border: OutlineInputBorder(
@@ -156,8 +159,8 @@ class _AddPlacesState extends State<AddPlaces> {
                       ),
                     ),
                     verticalGap1,
-                    TextField(
-                      controller: reachthereController,
+                    TextField(   
+                      controller: loncontroller,
                       decoration: InputDecoration(
                         hintText: 'Log',
                         border: OutlineInputBorder(
@@ -279,6 +282,9 @@ class _AddPlacesState extends State<AddPlaces> {
     } else {
       List<File> selectedpick = [];
       List<String> selectedpickpath = [];
+      String latcor =latcontroller.text;
+      String loncor =loncontroller.text;
+      
       // ignore: avoid_function_literals_in_foreach_calls
       pickedImages.forEach((element) {
         selectedpickpath.add(File(element.path).path);
@@ -287,6 +293,8 @@ class _AddPlacesState extends State<AddPlaces> {
       pickedImages.forEach((element) {
         selectedpick.add(File(element.path));
       });
+
+
       final destination = DestinationFB(
           placeName: placeNameController.text,
           location: locationController.text,
@@ -294,7 +302,9 @@ class _AddPlacesState extends State<AddPlaces> {
           reachthere: reachthereController.text,
           image: selectedpickpath,
           district: selectedDistrictvalue!,
-          category: selectedCategoryvalue!);
+          category: selectedCategoryvalue!,
+          latitude: latcor,
+          longitude: loncor);
 
       await repos.fbaddDestination(destination);
       // ignore: use_build_context_synchronously

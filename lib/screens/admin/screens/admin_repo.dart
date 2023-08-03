@@ -25,6 +25,8 @@ class Repository {
           category: data['catogory'],
           description: data['description'],
           reachthere: data['moreInFo'],
+          longitude: data['lon'],
+          latitude: data['lat'],
           image: List<String>.from(data['image']));
     }).toList();
   }
@@ -51,7 +53,9 @@ class Repository {
       'district': destination.district,
       'catogory': destination.category,
       'id': newplaces.id,
-      'image': urlS
+      'image': urlS,
+      'lat':destination.latitude,
+      'lon':destination.longitude
     };
     await newplaces.set(placeDetails);
     print('submited');
@@ -113,7 +117,10 @@ class Repository {
         'description': destination.description,
         'link': destination.location,
         'district': destination.district,
-        'moreInFo': destination.reachthere
+        'moreInFo': destination.reachthere,
+        'lat':destination.latitude,
+      'lon':destination.longitude
+
       });
     } catch (e) {
       print('$e');
@@ -137,12 +144,15 @@ class Repository {
       return querysnapshot.docs.map((doc) {
         var data = doc.data() as Map<String, dynamic>;
         return DestinationFB(
+          id: data['id'],
             placeName: data['name'],
             location: data['link'],
             district: data['district'],
             category: data['catogory'],
             description: data['description'],
             reachthere: data['moreInFo'],
+              longitude: data['lon'],
+          latitude: data['lat'],
             image: List<String>.from(data['image']));
       }).toList();
     }
@@ -154,12 +164,15 @@ class Repository {
       return querysnapshot.docs.map((doc) {
         var data = doc.data() as Map<String, dynamic>;
         return DestinationFB(
+          id: data['id'],
             placeName: data['name'],
             location: data['link'],
             district: data['district'],
             category: data['catogory'],
             description: data['description'],
             reachthere: data['moreInFo'],
+              longitude: data['lon'],
+          latitude: data['lat'],
             image: List<String>.from(data['image']));
       }).toList();
     }
@@ -170,12 +183,15 @@ class Repository {
       return querysnapshot.docs.map((doc) {
         var data = doc.data() as Map<String, dynamic>;
         return DestinationFB(
+          id: data['id'],
             placeName: data['name'],
             location: data['link'],
             district: data['district'],
             category: data['catogory'],
             description: data['description'],
             reachthere: data['moreInFo'],
+              longitude: data['lon'],
+          latitude: data['lat'],
             image: List<String>.from(data['image']));
       }).toList();
     }
@@ -192,12 +208,15 @@ class Repository {
       return filteredDatas.map((doc) {
         var data = doc.data() as Map<String, dynamic>;
         return DestinationFB(
+          id: data['id'],
             placeName: data['name'],
             location: data['link'],
             district: data['district'],
-            category: data['catogory'],
+            category: data['catogory'], 
             description: data['description'],
             reachthere: data['moreInFo'],
+              longitude: data['lon'],
+          latitude: data['lat'],
             image: List<String>.from(data['image']));
       }).toList();
     }
@@ -237,6 +256,8 @@ class Repository {
           category: data['catogory'],
           description: data['description'],
           reachthere: data['moreInFo'],
+            longitude: data['lon'],
+          latitude: data['lat'],
           image: List<String>.from(data['image']));
     }).toList();
   }

@@ -17,13 +17,16 @@ class DetailsPage extends StatelessWidget {
     required this.datas,
   }) : super(key: key);
   DestinationFB datas; 
-  double lat = 9.686181399999999; 
-  double log = 76.9052294; 
+
   @override
   Widget build(BuildContext context) {
     final favoriteModel = Provider.of<FavoriteModel>(context);
     favoriteModel.initFavorites(currentUserId);
     List listImg = datas.image;
+
+      double lat = double.parse(datas.latitude ?? '0,0');
+      double lon = double.parse(datas.longitude ?? '0,0'); 
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -106,6 +109,10 @@ class DetailsPage extends StatelessWidget {
                                     datas.category,
                                     // style: medium,
                                   ),
+                                  Text(
+                                    datas.category,
+                                    // style: medium,
+                                  ),
                                 ],
                               ),
                               IconFavorite(
@@ -173,17 +180,17 @@ class DetailsPage extends StatelessWidget {
                               myLocationButtonEnabled: false,
                               myLocationEnabled: false,
                               initialCameraPosition:  CameraPosition(
-                                target: LatLng(lat,log), 
+                                target: LatLng(lat,lon), 
                                 zoom: 15,
                               ), 
                               markers: { 
-                                 Marker(
+                                 Marker( 
                                   markerId: const MarkerId('marker_id'),
                                   position:
-                                      LatLng(lat,log),
+                                      LatLng(lat,lon),
                                 ),
                               },
-                            ),
+                              ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),

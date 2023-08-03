@@ -1,30 +1,24 @@
-
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
-class ProfileFirebase{
-
-ProfileFirebase._() ;
+class ProfileFirebase {
+  ProfileFirebase._();
   // Singleton instance variable
   static final ProfileFirebase _instance = ProfileFirebase._();
 
   // Factory constructor to return the singleton instance
   factory ProfileFirebase() => _instance;
 
-
   String? imageURLdb;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   File? image;
   Map<String, dynamic>? querySnapshotData;
 
-
   Future<String?> uploadImageAndGetUrl(File imageFile) async {
     try {
-      String fileName =
-          '${DateTime.now().millisecondsSinceEpoch}.png';
+      String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
       final ref = firebase_storage.FirebaseStorage.instance
           .ref()
           .child('user_profile_images')
@@ -38,14 +32,12 @@ ProfileFirebase._() ;
     }
   }
 
-
- saveProfile(image) async {
-  
+  saveProfile(image) async {
     if (image == null) {
       return;
     }
-    
-    String? imageUrl = await uploadImageAndGetUrl(image!); 
+
+    String? imageUrl = await uploadImageAndGetUrl(image!);
     if (imageUrl != null) {
       String userId = _auth.currentUser?.uid ?? ''; // Get the user's ID
       await FirebaseFirestore.instance
@@ -58,7 +50,7 @@ ProfileFirebase._() ;
       });
       // profileImageProvider.setImageUrl(imageUrl);
       print('Profile image uploaded and URL stored in Firebase!');
-      print(imageUrl); 
+      print(imageUrl);
     } else if (imageUrl == null) {
     } else {
       print('Error uploading profile image.');
@@ -72,12 +64,10 @@ ProfileFirebase._() ;
         await userDatas.doc(userId).get();
     if (docSnapshot.exists) {
       // Check if the document exists before accessing its data
-        querySnapshotData = docSnapshot.data();
-        imageURLdb =querySnapshotData!['imageUrl'] as String ; 
-
+      querySnapshotData = docSnapshot.data();
+      imageURLdb = querySnapshotData!['imageUrl'] as String;
     } else {
       print('User document does not exist.');
     }
   }
-
 }

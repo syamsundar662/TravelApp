@@ -37,6 +37,8 @@ class FavoriteModel extends ChangeNotifier {
             location: data['link'],
             description: data['description'],
             reachthere: data['moreInFo'],
+            longitude: data['lon'],
+            latitude: data['lat'],
             image: List<String>.from(data['image']),
           );
         })

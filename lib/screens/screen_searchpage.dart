@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
+import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/screens/screen_searchfullscreen.dart';
 import 'package:trivo/widgets/w_currentlocation.dart';
 import 'package:trivo/widgets/w_filterlist.dart';
@@ -115,9 +117,9 @@ class _SearchpageState extends State<Searchpage> {
                         itemBuilder: (BuildContext context, int index) {
                           var data = dataEx[index];
                           return InkWell(
-                            onTap: () {  
+                            onTap: () {   
                                 Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SearchDetailsPage (datas: data),),); 
+                              MaterialPageRoute(builder: (context) =>SearchDetailsPage  (datas: data),),); 
                             },
                             child: Stack(
                               children: [
@@ -177,10 +179,10 @@ class _SearchpageState extends State<Searchpage> {
                                               fontSize: 12,
                                             ),
                                           ),
-                                //           IconFavorite(
-                                // destinationId: data.id!,
-                                // size: 25
-                                          // )
+                                          IconFavorite(
+                                destinationId: data.id!, 
+                                size: 25
+                                          )
                                         ],
                                       ),
                                     ],

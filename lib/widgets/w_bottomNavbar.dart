@@ -32,10 +32,8 @@ class _NavbarState extends State<Navbar> {
   void initState() {
     final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
     favoriteModel.initFavorites(currentUserId);
-      imgurl.getuserimage();
     super.initState(); 
     setState(()  { 
-      imgurl.imageURLdb;
     });
   }
 

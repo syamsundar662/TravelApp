@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 ValueNotifier<List<String>> selectedFilters = ValueNotifier<List<String>>([]);
 ValueNotifier<List<String>> selectedFiltershome =
@@ -40,7 +40,6 @@ class ListSelecterMaker extends StatefulWidget {
 }
 
 class _ListSelecterMakerState extends State<ListSelecterMaker> {
-
   @override
   Widget build(BuildContext context) {
     return widget.list == categories

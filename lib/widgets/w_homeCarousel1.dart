@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 class CarouselSlidermain extends StatefulWidget {
   const CarouselSlidermain({super.key});
@@ -24,7 +24,7 @@ class _CarouselSlidermainState extends State<CarouselSlidermain> {
               height: screenHeight * .5,
               viewportFraction: .963,
               enlargeCenterPage: true,
-              autoPlay: false,
+              autoPlay: true,
               autoPlayInterval: const Duration(seconds: 3),
             ),
                       items: random.value.map((destination) { 

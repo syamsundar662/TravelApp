@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
 
-final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+ 
+String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
 class FavoriteModel extends ChangeNotifier {
   List<String> favorites = [];

@@ -1,11 +1,13 @@
 // ignore_for_file: file_names
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:rive/rive.dart';
-import 'package:trivo/database/functions/Firebase/db_authentication.dart';
+import 'package:trivo/database/functions/Firebase/authentication/db_authentication.dart';
+import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_homepage.dart';
 import 'package:trivo/screens/screen_signup.dart';
-import 'package:trivo/widgets/w_bottomNavbar.dart';
+import 'package:trivo/widgets/w_bottomnavbar.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,16 +15,14 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
- 
-class _LoginPageState extends State<LoginPage> {
 
+class _LoginPageState extends State<LoginPage> {
   final _gmailcontroller = TextEditingController();
 
   final _passwordcontroller = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
   bool loading = false;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                                                     context);
                                             setState(() {
                                               loading = false;
+                                              currentUserId = FirebaseAuth
+                                                  .instance.currentUser!.uid;
                                             });
                                           },
                                           style: ButtonStyle(
@@ -183,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                                   child: const Text(
                                     'Dont have an account? SignUp',
                                     style: TextStyle(
+                                        decoration: TextDecoration.underline,
                                         color:
                                             Color.fromARGB(177, 10, 124, 162),
                                         fontSize: 13,

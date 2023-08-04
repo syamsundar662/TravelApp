@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trivo/database/functions/Firebase/profile.dart';
+import 'package:trivo/database/functions/Firebase/db_userprofile.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/screens/screen_explore.dart';
 import 'package:trivo/screens/screen_favourites.dart';
 import 'package:trivo/screens/screen_home.dart';
-
 import 'package:trivo/screens/screen_searchpage.dart';
-import 'package:trivo/screens/screen_tripPlan.dart';
+
 
 class Navbar extends StatefulWidget {
   const Navbar({super.key});
@@ -25,16 +24,13 @@ class _NavbarState extends State<Navbar> {
     const Searchpage(),
     const Explore(),
     const Favorites(),
-    const TripPage(),
   ];
 
   @override
   void initState() {
     final favoriteModel = Provider.of<FavoriteModel>(context, listen: false);
     favoriteModel.initFavorites(currentUserId);
-    super.initState(); 
-    setState(()  { 
-    });
+    super.initState();
   }
 
   @override
@@ -55,29 +51,29 @@ class _NavbarState extends State<Navbar> {
               currentindex = value;
             });
           },
-          children: pages, 
+          children: pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           onTap: (value) {
             _pageViewController.animateToPage(
               value,
-              duration: const Duration(milliseconds: 300),
-              curve: Curves.linear,
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.decelerate,
             );
             setState(() {
               currentindex = value;
             });
           },
-          selectedItemColor:  Color.fromARGB(177, 10, 124, 162), 
+          selectedItemColor: const Color.fromARGB(177, 10, 124, 162),
           unselectedItemColor: const Color.fromARGB(255, 150, 150, 150),
           iconSize: 20,
           currentIndex: currentindex,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined ),
+              icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
             BottomNavigationBarItem(
@@ -85,17 +81,14 @@ class _NavbarState extends State<Navbar> {
               label: 'Search',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.explore_outlined ),
-              label: 'Explore', 
+              icon: Icon(Icons.explore_outlined),
+              label: 'Explore',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border ,
+              icon: Icon(
+                Icons.favorite_border,
               ),
               label: 'Favourites',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.directions_car_outlined  ),
-              label: 'Trips',
             ),
           ],
         ),

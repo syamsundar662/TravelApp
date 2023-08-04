@@ -1,15 +1,17 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:trivo/database/functions/Firebase/db_authentication.dart';
+import 'package:trivo/database/functions/Firebase/authentication/db_authentication.dart';
 import 'package:trivo/helper/helper_size.dart';
 
+// ignore: must_be_immutable
 class signUp extends StatelessWidget {
   signUp({super.key});
 
   final _gmailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
+  bool done = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class signUp extends StatelessWidget {
                                   filled: true),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter valid username.';
+                                  return 'Enter valid gmail.';
                                 } else {
                                   return null;
                                 }
@@ -82,7 +84,7 @@ class signUp extends StatelessWidget {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 'Enter valid password.';
+                                  return 'Enter your password.';
                                 } else {
                                   return null;
                                 }
@@ -95,17 +97,11 @@ class signUp extends StatelessWidget {
                                 InkWell(
                                   onTap: () async {
                                     _formkey.currentState!.validate();
-                                    F_authentication().createGmailandPassword(
-                                        _gmailcontroller.text,
-                                        _passwordcontroller.text,
-                                        context);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            duration: Duration(seconds: 1),
-                                            backgroundColor: Color.fromARGB(
-                                                177, 10, 124, 162),
-                                            content:
-                                                Text('Successfully Created')));
+                                    await F_authentication()
+                                        .createGmailandPassword(
+                                            _gmailcontroller.text,
+                                            _passwordcontroller.text,
+                                            context);
                                   },
                                   child: Container(
                                     width: screenWidth * .937,
@@ -114,7 +110,6 @@ class signUp extends StatelessWidget {
                                       color: const Color.fromARGB(
                                           177, 10, 124, 162),
                                       borderRadius: BorderRadius.circular(10),
-                                      // border: Border.all(width: .6)
                                     ),
                                     child: const Align(
                                         child: Text(
@@ -122,11 +117,7 @@ class signUp extends StatelessWidget {
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400),
-                                      // style: TextStyle(
-                                      //     color: Colors.white,
-                                      //     fontSize: 20,
-                                      //     fontWeight: FontWeight.w300),
-                                    )),
+                                          )),
                                   ),
                                 ),
                               ],

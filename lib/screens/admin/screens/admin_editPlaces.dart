@@ -3,7 +3,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 class EditPlaces extends StatefulWidget {
   const EditPlaces({Key? key, required this.destination}) : super(key: key);
@@ -11,7 +11,6 @@ class EditPlaces extends StatefulWidget {
   final DestinationFB destination;
 
   @override
-
   EditPlacesState createState() => EditPlacesState();
 }
 
@@ -24,18 +23,18 @@ class EditPlacesState extends State<EditPlaces> {
   late TextEditingController descriptionController;
   late TextEditingController locationController;
   late TextEditingController reachthereController;
+  late TextEditingController latcontroler;
+  late TextEditingController longitude;
 
   @override
   void initState() {
     super.initState();
-    placeNameController =
-        TextEditingController(text: widget.destination.placeName);
-    descriptionController =
-        TextEditingController(text: widget.destination.description);
-    locationController =
-        TextEditingController(text: widget.destination.location);
-    reachthereController =
-        TextEditingController(text: widget.destination.reachthere);
+    placeNameController =TextEditingController(text: widget.destination.placeName);
+    descriptionController =TextEditingController(text: widget.destination.description);
+    locationController =TextEditingController(text: widget.destination.location);
+    reachthereController =TextEditingController(text: widget.destination.reachthere);
+    latcontroler = TextEditingController(text: widget.destination.latitude);
+    longitude = TextEditingController(text: widget.destination.longitude);
     selectedDistrictvalue = widget.destination.district;
     selectedCategoryvalue = widget.destination.category;
   }
@@ -137,6 +136,22 @@ class EditPlacesState extends State<EditPlaces> {
                         borderRadius: BorderRadius.circular(20)),
                   ),
                 ),
+                TextField(
+                  controller: latcontroler,
+                  decoration: InputDecoration(
+                    hintText: 'latitude',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                ),
+                TextField(
+                  controller: longitude,
+                  decoration: InputDecoration(
+                    hintText: 'Longitude',
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                  ),
+                ),
                 ElevatedButton(
                     onPressed: () {
                       updateDestination(widget.destination);
@@ -161,12 +176,16 @@ class EditPlacesState extends State<EditPlaces> {
     final category = selectedCategoryvalue;
     final discription = descriptionController.text;
     final reach = reachthereController.text;
+    final lat = latcontroler.text;
+    final long = longitude.text; 
     destinationFB.placeName = name;
     destinationFB.district = district!;
     destinationFB.location = locate;
     destinationFB.category = category!;
     destinationFB.description = discription;
     destinationFB.reachthere = reach;
+    destinationFB.latitude =lat;
+    destinationFB.longitude=long; 
 
     Repository().editData(destinationFB);
     ScaffoldMessenger.of(context)

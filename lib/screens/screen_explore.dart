@@ -100,7 +100,7 @@ class _ExploreState extends State<Explore> {
                               ),
                               // Positioned(
                               //   top: 10,
-                              //   right: 10, 
+                              //   right: 10,
                               //   child: CircleAvatar(
                               //       radius: 19,
                               //       backgroundColor:

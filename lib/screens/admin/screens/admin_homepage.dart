@@ -6,11 +6,11 @@ import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 import 'package:trivo/screens/admin/screens/admin_editPlaces.dart';
 import 'package:trivo/screens/admin/screens/map_try.dart';
-import 'package:trivo/widgets/w_bottomNavbar.dart';
-import 'package:trivo/widgets/w_showdialogue.dart';
+import 'package:trivo/widgets/w_bottomnavbar.dart';
+import 'package:trivo/widgets/w_signout.dart';
 
 bool isListEmpty = true;
 
@@ -39,10 +39,11 @@ class _AdminhomeState extends State<Adminhome> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> MapSample()));  
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MapSample()));
               },
               icon: const Icon(Icons.map)),
-          TextButton( 
+          TextButton(
             onPressed: () {
               showDialog(
                   context: context,
@@ -119,9 +120,14 @@ class _AdminhomeState extends State<Adminhome> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                data.placeName,
-                                style: const TextStyle(fontSize: 15),
+                              SizedBox(
+                                width: 120,
+                                child: Text(
+                                  data.placeName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
                               ),
                               Row(
                                 children: [

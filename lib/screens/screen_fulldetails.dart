@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -102,17 +104,15 @@ class DetailsPage extends StatelessWidget {
                                 children: [
                                   Text(
                                     datas.placeName,
-                                    style: bold3,
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                       maxLines: 1,
+                                  overflow: TextOverflow.ellipsis  , 
                                   ),
                                   gapW5,
-                                  Text(
-                                    datas.category,
-                                    // style: medium,
-                                  ),
-                                  Text(
-                                    datas.category,
-                                    // style: medium,
-                                  ),
+                                  
                                 ],
                               ),
                               IconFavorite(
@@ -120,6 +120,21 @@ class DetailsPage extends StatelessWidget {
                                 size: 25,
                               ),
                             ],
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: .8 ,color: Colors.grey ),
+                            
+                              borderRadius: BorderRadius.circular(10)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 5,right: 5,bottom: 2,top: 2 ),
+                              child: Text(
+                                        datas.category,
+                                        style: const TextStyle(color: Colors.grey ),
+                                        // style: medium,
+                                      ),
+                            ),
                           ),
                           const SizedBox(height: 8),
                           const Text(
@@ -170,30 +185,38 @@ class DetailsPage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      height: 200,
+                      height: screenHeight/3 ,
                       width: double.infinity,
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: GoogleMap(
-                              myLocationButtonEnabled: false,
-                              myLocationEnabled: false,
-                              initialCameraPosition:  CameraPosition(
-                                target: LatLng(lat,lon), 
-                                zoom: 15,
-                              ), 
-                              markers: { 
-                                 Marker( 
-                                  markerId: const MarkerId('marker_id'),
-                                  position:
-                                      LatLng(lat,lon),
-                                ),
-                              },
-                              ),
+                      child: ClipRRect( 
+                        borderRadius: BorderRadius.circular(10),
+                        child: GoogleMap(
+                          scrollGesturesEnabled: false ,
+                          mapType: MapType.hybrid ,  
+                          myLocationButtonEnabled: true,
+                          myLocationEnabled: true, 
+                          zoomControlsEnabled: true, 
+                          zoomGesturesEnabled: true,
+                          initialCameraPosition:  CameraPosition(
+                            target: LatLng(lat,lon), 
+                            zoom: 14,
+                          ), 
+                          markers: { 
+                             Marker( 
+                              markerId: const MarkerId('marker_id'),
+                              position:
+                                  LatLng(lat,lon),
+                            ),
+                          }, 
+                          // ignore: prefer_collection_literals
+                          gestureRecognizers: Set()
+                           ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
+                          
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                            padding: const EdgeInsets.only(left: 8,right: 8,bottom: 20),
                             child: Align(
                               alignment: Alignment.bottomCenter,
                               child: InkWell(
@@ -202,7 +225,7 @@ class DetailsPage extends StatelessWidget {
                                   height: 50,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: const Color.fromARGB(195, 0, 0, 0),
+                                      color: const Color.fromARGB(255, 0, 0, 0),
                                       borderRadius:
                                           BorderRadius.circular(10)),
                                   child: const Align(
@@ -217,10 +240,6 @@ class DetailsPage extends StatelessWidget {
                               ),
                             ),
                           )
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ],

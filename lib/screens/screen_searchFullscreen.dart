@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -23,9 +25,8 @@ class SearchDetailsPage extends StatelessWidget {
     favoriteModel.initFavorites(currentUserId);
     List listImg = datas.image;
 
-
-      double lat = double.parse(datas.latitude ?? '');
-      double lon = double.parse(datas.longitude ?? ''); 
+    double lat = double.parse(datas.latitude ?? '');
+    double lon = double.parse(datas.longitude ?? '');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -99,15 +100,16 @@ class SearchDetailsPage extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    datas.placeName,
-                                    style: bold3,
+                                  SizedBox(
+                                    width: screenWidth / 1.2,
+                                    child: Text(
+                                      datas.placeName,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: bold3,
+                                    ),
                                   ),
                                   gapW5,
-                                  Text(
-                                    datas.category,
-                                    // style: medium,
-                                  ),  
                                 ],
                               ),
                               IconFavorite(
@@ -115,6 +117,21 @@ class SearchDetailsPage extends StatelessWidget {
                                 size: 25,
                               ),
                             ],
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: .8, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 5, right: 5, bottom: 2, top: 2),
+                              child: Text(
+                                datas.category,
+                                style: const TextStyle(color: Colors.grey),
+                                // style: medium,
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 8),
                           const Text(
@@ -161,61 +178,61 @@ class SearchDetailsPage extends StatelessWidget {
                       'Direction',
                       style: bold2,
                     ),
-                  ),
-                  Padding(
+                  ),Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      height: 200,
+                      height: screenHeight / 3,
                       width: double.infinity,
-                      child: Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: GoogleMap(
-                              myLocationButtonEnabled: false,
-                              myLocationEnabled: false,
-                              initialCameraPosition:  CameraPosition(
-                                target: LatLng(lat, lon), 
-                                zoom: 15,
-                              ),
-                              markers: {
-                                 Marker(
-                                  markerId: MarkerId('marker_id'),
-                                  position:
-                                      LatLng(lat, lon),
-                                ),
-                              },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: GoogleMap(
+                            mapType: MapType.hybrid,
+                            myLocationButtonEnabled: true,
+                            myLocationEnabled: true,
+                            zoomControlsEnabled: true,
+                            zoomGesturesEnabled: true,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(lat, lon),
+                              zoom: 14,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: InkWell(
-                                onTap: () => launchGoogleMaps(datas.location),
-                                child: Container(
-                                  height: 50,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(195, 0, 0, 0),
-                                      borderRadius:
-                                          BorderRadius.circular(10)),
-                                  child: const Align(
-                                      child: Text(
-                                    'Get direction',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                ),
+                            markers: {
+                              Marker(
+                                markerId: const MarkerId('marker_id'),
+                                position: LatLng(lat, lon),
                               ),
-                            ),
-                          )
-                        ],
+                            },
+                            // ignore: prefer_collection_literals
+                            gestureRecognizers: Set()
+                              ..add(Factory<PanGestureRecognizer>(
+                                  () => PanGestureRecognizer()))),
                       ),
                     ),
                   ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 8, right: 8, bottom: 20),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: InkWell(
+                        onTap: () => launchGoogleMaps(datas.location),
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Align(
+                              child: Text(
+                            'Get direction',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ],

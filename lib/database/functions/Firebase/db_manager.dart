@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 ValueNotifier<List<DestinationFB>> dataListFromFirebase = ValueNotifier([]);
 

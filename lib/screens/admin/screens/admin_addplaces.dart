@@ -6,7 +6,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/lists/list_categories.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 bool isListEmpty = true;
 bool load = false;
@@ -33,7 +33,6 @@ class _AddPlacesState extends State<AddPlaces> {
   final reachthereController = TextEditingController();
   final latcontroller = TextEditingController();
   final loncontroller = TextEditingController();
-
 
   Repository repos = Repository();
 
@@ -149,7 +148,7 @@ class _AddPlacesState extends State<AddPlaces> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
-                    verticalGap1, 
+                    verticalGap1,
                     TextField(
                       controller: latcontroller,
                       decoration: InputDecoration(
@@ -159,7 +158,7 @@ class _AddPlacesState extends State<AddPlaces> {
                       ),
                     ),
                     verticalGap1,
-                    TextField(   
+                    TextField(
                       controller: loncontroller,
                       decoration: InputDecoration(
                         hintText: 'Log',
@@ -224,7 +223,7 @@ class _AddPlacesState extends State<AddPlaces> {
                         ? const CupertinoActivityIndicator()
                         : ElevatedButton(
                             onPressed: () async {
-                              submitChecking(context); 
+                              submitChecking(context);
                             },
                             child: const Text('submit')),
                   ],
@@ -269,7 +268,7 @@ class _AddPlacesState extends State<AddPlaces> {
         descriptionController.text.isEmpty ||
         pickedImages.isEmpty ||
         reachthereController.text.isEmpty ||
-        latcontroller.text.isEmpty||
+        latcontroller.text.isEmpty ||
         loncontroller.text.isEmpty) {
       showDialog(
         context: context,
@@ -282,9 +281,9 @@ class _AddPlacesState extends State<AddPlaces> {
     } else {
       List<File> selectedpick = [];
       List<String> selectedpickpath = [];
-      String latcor =latcontroller.text;
-      String loncor =loncontroller.text;
-      
+      String latcor = latcontroller.text;
+      String loncor = loncontroller.text;
+
       // ignore: avoid_function_literals_in_foreach_calls
       pickedImages.forEach((element) {
         selectedpickpath.add(File(element.path).path);
@@ -293,7 +292,6 @@ class _AddPlacesState extends State<AddPlaces> {
       pickedImages.forEach((element) {
         selectedpick.add(File(element.path));
       });
-
 
       final destination = DestinationFB(
           placeName: placeNameController.text,

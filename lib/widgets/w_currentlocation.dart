@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+
 class LocationScreens extends StatefulWidget {
   const LocationScreens({super.key});
 
@@ -9,7 +10,7 @@ class LocationScreens extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreens> {
-    String address = 'Fetching...';
+  String address = 'Fetching...';
 
   @override
   void initState() {
@@ -66,31 +67,32 @@ class _LocationScreenState extends State<LocationScreens> {
         address =
             '${place.subLocality},${place.locality},${place.administrativeArea}';
       });
-    } catch (e) { 
+    } catch (e) {
       setState(() {
         address = 'not available.';
-      }); 
+      });
     }
   }
- 
+
   @override
   Widget build(BuildContext context) {
-    return 
-       Padding(
-         padding: const EdgeInsets.only(left: 0 ),
-         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center    ,  
-          // crossAxisAlignment: CrossAxisAlignment.center  ,   
-           children: [
-            const Icon(Icons.my_location_outlined,color: Colors.orange  ,size: 15,), 
-             Text(
-             address, 
-             style: const TextStyle(color: Colors.black,fontSize: 12,fontWeight: FontWeight.w300  ),
-         
-           ),
-           ],
-         ),
-       ); 
-   
-  } 
+    return Padding(
+      padding: const EdgeInsets.only(left: 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            Icons.my_location_outlined,
+            color: Colors.orange,
+            size: 15,
+          ),
+          Text(
+            address,
+            style: const TextStyle(
+                color: Colors.black, fontSize: 12, fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
-import 'package:trivo/database/functions/Firebase/profile.dart';
+import 'package:trivo/database/functions/Firebase/db_userprofile.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/helper/helper_styling.dart';
 import 'package:trivo/lists/list_categories.dart';
-import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 import 'package:trivo/widgets/w_currentlocation.dart';
 import 'package:trivo/screens/screen_fulldetails.dart';
 import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
-import 'package:trivo/widgets/w_homeCarousel1.dart';
+import 'package:trivo/widgets/w_homecarousel1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,7 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   ProfileFirebase urlimg = ProfileFirebase();
-  bool loadpro =true;
+  bool loadpro = true;
 
   @override
   void initState() {
@@ -35,12 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void profileLoad() async {
     setState(() {
-      loadpro =true;
+      loadpro = true;
       urlimg.imageURLdb;
     });
     await urlimg.getuserimage();
     setState(() {
-      loadpro =false;
+      loadpro = false;
     });
   }
 
@@ -54,61 +53,37 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50),
         child: AppBar(
-          actions: [
-            // urlimg.imageURLdb != null
-            //     ? InkWell(
-            //         onTap: ()  => Navigator.push(context,
-            //             MaterialPageRoute(builder: (context) => const Profile())),
-            //         child: Padding(
-            //           padding: const EdgeInsets.only(right: 16),
-            //           child: CircleAvatar(
-            //             radius: 18,
-            //             backgroundImage:
-            //                 CachedNetworkImageProvider(urlimg.imageURLdb!),
-            //           ),
-            //         ),
-            //       )
-            //     : IconButton(
-            //         onPressed: () {
-            //           Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: (context) => const Profile()));
-            //         },
-            //         icon: const Icon(
-            //           Icons.account_circle,
-            //           color: Colors.black,
-            //           size: 34,  
-            //         ))
-            loadpro ? SizedBox( 
-              child: Center(child: Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: CupertinoActivityIndicator (),
-              ))):
-            IconButton(
-              onPressed: () async {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(
-                    builder: (context) => const Profile(),
-                  ),
-                ); 
-              },
-              icon: urlimg.imageURLdb != null
-                  ? Padding( 
-                    padding: const EdgeInsets.only(right: 0),
-                    child: CircleAvatar(
-                        radius: 36,
-                        backgroundImage:
-                            CachedNetworkImageProvider(urlimg.imageURLdb!),
-                      ),
+          actions: [loadpro
+                ? const SizedBox(
+                    child: Center(
+                        child: Padding(
+                    padding: EdgeInsets.only(right: 16),
+                    child: CupertinoActivityIndicator(),
+                  )))
+                : IconButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Profile(),
+                        ),
+                      );
+                    },
+                    icon: urlimg.imageURLdb != null
+                        ? Padding(
+                            padding: const EdgeInsets.only(right: 0),
+                            child: CircleAvatar(
+                              radius: 36,
+                              backgroundImage: CachedNetworkImageProvider(
+                                  urlimg.imageURLdb!),
+                            ),
+                          )
+                        : const Icon(
+                            Icons.account_circle,
+                            color: Colors.black,
+                            size: 34,
+                          ),
                   )
-                  : const Icon(
-                      Icons.account_circle,
-                      color: Colors.black,
-                      size: 34,
-                    ),
-            )
           ],
           elevation: .0,
           automaticallyImplyLeading: false,
@@ -124,19 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.black),
               ),
             ],
-          ),
-          //   const Text(
-          //   'Discover',
-          //   style: TextStyle(
-          //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
-          // ),
-          // SizedBox(width: 40,),
-          //   const Text(
-          //   'Discover',
-          //   style: TextStyle(
-          //       fontSize: 22, fontWeight: FontWeight.w600, color: Colors.black),
-          // ),
-        ),
+          ),),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -185,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   child: SizedBox(
-                      height: 35,
+                      height: 39,
                       child: ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
@@ -216,11 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: ValueListenableBuilder<List<DestinationFB>>(
                     valueListenable: dataListFromFirebase,
                     builder: (BuildContext context, List<DestinationFB> value,
-                        Widget? child) {
-                      // if (value.isEmpty) {
-                      //   return CircularProgressIndicator();
-                      // }
-                      var sampleData = value;
+                        Widget? child) { var sampleData = value;
                       return Padding(
                         padding: const EdgeInsets.only(left: 9.5, right: 9.5),
                         child: GridView.builder(
@@ -288,12 +247,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              data.placeName,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16,
+                                            SizedBox(
+                                              width: 145,
+                                              child: Text(
+                                                data.placeName,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 16,
+                                                ),
                                               ),
                                             ),
                                             Text(

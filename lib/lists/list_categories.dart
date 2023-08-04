@@ -7,5 +7,7 @@ List<String> categories=[
   'Zoo',
   'Water fall',
   'Grasslands',
-  'Island'
+  'Island',
+  'Water Bodies',
+  
 ];

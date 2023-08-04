@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_snackbars/enums/animate_from.dart';
 import 'package:smart_snackbars/smart_snackbars.dart';
-import 'package:trivo/database/functions/Firebase/profile.dart';
+import 'package:trivo/database/functions/Firebase/db_userprofile.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_homepage.dart';
 import 'package:trivo/screens/profile_section/screen_aboutus.dart';
 import 'package:trivo/screens/profile_section/screen_contactus.dart';
 import 'package:trivo/screens/profile_section/screen_privacypolicy.dart';
 import 'package:trivo/screens/profile_section/screen_termsandconditions.dart';
-import 'package:trivo/widgets/w_showdialogue.dart';
+import 'package:trivo/widgets/w_signout.dart';
 
 String umail = '';
 
@@ -73,8 +73,8 @@ class _ProfileState extends State<Profile> {
         preferredSize: const Size.fromHeight(40),
         child: AppBar(
           title: InkWell(
-            onTap: () => Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const Adminhome())),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Adminhome())),
             child: const Text(
               'Profile',
               style: TextStyle(color: Colors.black, fontSize: 20),
@@ -105,8 +105,8 @@ class _ProfileState extends State<Profile> {
                       SmartSnackBars.showCustomSnackBar(
                         context: context,
                         duration: const Duration(milliseconds: 1800),
-                        animateFrom: AnimateFrom.fromBottom, 
-                        distanceToTravel: 25 , 
+                        animateFrom: AnimateFrom.fromBottom,
+                        distanceToTravel: 25,
                         outerPadding: const EdgeInsets.all(0),
                         child: Container(
                           margin: const EdgeInsets.symmetric(
@@ -125,7 +125,8 @@ class _ProfileState extends State<Profile> {
                                     style: TextStyle(color: Colors.white),
                                   )
                                 ],
-                              ),Text(
+                              ),
+                              Text(
                                 'Close',
                                 style: TextStyle(color: Colors.white),
                               )
@@ -145,197 +146,212 @@ class _ProfileState extends State<Profile> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Column(
-            children: [
-              Column(
-                children: [
-                  Align(
-                    child: InkWell(
-                      onTap: () async {
-                        setState(() {
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Dialog(
-                                    insetPadding: const EdgeInsets.all(40),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(40)),
-                                    child: Container(
-                                      height: 300,
-                                      width: 200,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(30),
-                                      ),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            InkWell(
-                                              onTap: () async {
-                                                await _pickImage();
-                                              },
-                                              child: url.imageURLdb != null
-                                                  ? CircleAvatar(
-                                                      radius: 80,
-                                                      backgroundImage:
-                                                          CachedNetworkImageProvider(
-                                                              url.imageURLdb!),
-                                                    )
-                                                  : _image != null
-                                                      ? CircleAvatar(
-                                                          radius: 80,
-                                                          backgroundImage:
-                                                              FileImage(
-                                                                  _image!))
-                                                      : CircleAvatar(
-                                                          radius: 80,
-                                                          child: Image.asset(
-                                                              'assets/profile-icon-design-free-vector (1).jpg')),
-                                            ),
-                                            gap,
-                                            Text(umail)
-                                          ],
-                                        ),
-                                      ),
-                                    ));
-                              });
-                        });
-                      },
-                      child: url.imageURLdb != null
-                          ? CircleAvatar(
-                              radius: 60,
-                              backgroundImage:
-                                  CachedNetworkImageProvider(url.imageURLdb!),
-                            )
-                          : _image != null
-                              ? CircleAvatar(
-                                  radius: 60,
-                                  backgroundImage: FileImage(_image!))
-                              : CircleAvatar(
-                                  radius: 60,
-                                  child: Image.asset(
-                                      'assets/profile-icon-design-free-vector (1).jpg')),
-                    ),
-                  ),
-                  Text(
-                    profilename,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400, fontSize: 25),
-                  ),
-                  Text(umail),
-                  TextButton(
-                    onPressed: () async {
-                      url.imageURLdb = null; 
-                      await _pickImage();
-                    },
-                    child: const Text('Add or edit avatar'),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 40,
-              ),
-              Align(
-                alignment: Alignment.topLeft,
+          child: SingleChildScrollView(
+            child: SizedBox(
+              child: SizedBox(
+                height: screenHeight,
+                width: screenWidth,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ContactUsPage())),
-                      child: const Text(
-                        'Contact Us',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 56, 56, 56),
-                            fontWeight: FontWeight.w200),
+                    Column(
+                      children: [
+                        Align(
+                          child: InkWell(
+                            onTap: () async {
+                              setState(() {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Dialog(
+                                          insetPadding:
+                                              const EdgeInsets.all(40),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
+                                          child: Container(
+                                            height: 300,
+                                            width: 200,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                            ),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      await _pickImage();
+                                                    },
+                                                    child: url.imageURLdb !=
+                                                            null
+                                                        ? CircleAvatar(
+                                                            radius: 80,
+                                                            backgroundImage:
+                                                                CachedNetworkImageProvider(
+                                                                    url.imageURLdb!),
+                                                          )
+                                                        : _image != null
+                                                            ? CircleAvatar(
+                                                                radius: 80,
+                                                                backgroundImage:
+                                                                    FileImage(
+                                                                        _image!))
+                                                            : CircleAvatar(
+                                                                radius: 80,
+                                                                child: Image.asset(
+                                                                    'assets/profile-icon-design-free-vector (1).jpg')),
+                                                  ),
+                                                  gap,
+                                                  Text(umail)
+                                                ],
+                                              ),
+                                            ),
+                                          ));
+                                    });
+                              });
+                            },
+                            child: url.imageURLdb != null
+                                ? CircleAvatar(
+                                    radius: 60,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        url.imageURLdb!),
+                                  )
+                                : _image != null
+                                    ? CircleAvatar(
+                                        radius: 60,
+                                        backgroundImage: FileImage(_image!))
+                                    : CircleAvatar(
+                                        radius: 60,
+                                        child: Image.asset(
+                                            'assets/profile-icon-design-free-vector (1).jpg')),
+                          ),
+                        ),
+                        Text(
+                          profilename,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 25),
+                        ),
+                        Text(umail),
+                        TextButton(
+                          onPressed: () async {
+                            url.imageURLdb = null;
+                            await _pickImage();
+                          },
+                          child: const Text('Add or edit avatar'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ContactUsPage())),
+                            child: const Text(
+                              'Contact Us',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 56, 56, 56),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          const Text(''),
+                          InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        TermsAndConditionsPage())),
+                            child: const Text(
+                              'Terms and Conditions',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 56, 56, 56),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          const Text(''),
+                          InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const PrivacyPolict())),
+                            child: const Text(
+                              'Privacy Policy',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 56, 56, 56),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          const Text(''),
+                          InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const AboutUsPage())),
+                            child: const Text(
+                              'About Us',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 56, 56, 56),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                          const Divider(
+                            thickness: 1,
+                          ),
+                          const Text(''),
+                          InkWell(
+                            onTap: () async {
+                              await signout(context);
+                              setState(() {});
+                            },
+                            child: const Text(
+                              'Logout',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Color.fromARGB(255, 56, 56, 56),
+                                  fontWeight: FontWeight.w200),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const Divider(
-                      thickness: 1,
+                    const SizedBox(
+                      height: 20,
                     ),
-                    const Text(''),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TermsAndConditionsPage())),
-                      child: const Text(
-                        'Terms and Conditions',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 56, 56, 56),
-                            fontWeight: FontWeight.w200),
+                    const Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [Text('Version 1.0')],
                       ),
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const Text(''),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const PrivacyPolict())),
-                      child: const Text(
-                        'Privacy Policy',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 56, 56, 56),
-                            fontWeight: FontWeight.w200),
-                      ),
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const Text(''),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AboutUsPage())),
-                      child: const Text(
-                        'About Us',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 56, 56, 56),
-                            fontWeight: FontWeight.w200),
-                      ),
-                    ),
-                    const Divider(
-                      thickness: 1,
-                    ),
-                    const Text(''),
-                    InkWell(
-                      onTap: () {
-                        signout(context);
-                      },
-                      child: const Text(
-                        'Logout',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 56, 56, 56),
-                            fontWeight: FontWeight.w200),
-                      ),
-                    ),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [Text('Version 1.0')],
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),

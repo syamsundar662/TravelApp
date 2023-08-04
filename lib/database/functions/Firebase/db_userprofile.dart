@@ -27,7 +27,7 @@ class ProfileFirebase {
       String downloadUrl = await ref.getDownloadURL();
       return downloadUrl;
     } catch (e) {
-      print('Error uploading profile image: $e');
+      // print('Error uploading profile image: $e');
       return null;
     }
   }

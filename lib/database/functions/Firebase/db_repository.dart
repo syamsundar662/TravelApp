@@ -238,12 +238,12 @@ class Repository {
     // Generate random indices to get six random documents
     final random = Random();
     final randomIndices = <int>{};
-    while (randomIndices.length < 6) {
+    while (randomIndices.length < 4) {
       randomIndices.add(random.nextInt(totalDocuments));
     }
 
-    // Fetch exactly six random destinations
-    final randomDocs =
+    // Fetch exactly 4 random destinations
+    final randomDocs = 
         randomIndices.map((index) => snapshot.docs[index]).toList();
 
     return randomDocs.map((doc) {
@@ -263,14 +263,11 @@ class Repository {
   }
 
   //random list 
-  ////
   Future<void> getRandomDestinations() async {
     final List<DestinationFB> randomDestinations =
         await fetchRandomDestinations();
     random.value = randomDestinations;
   }
-
-  ///
 }
 
 List<String>? selectedDistricts = [];

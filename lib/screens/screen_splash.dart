@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:trivo/helper/helper_size.dart';
-import 'package:trivo/screens/admin/screens/admin_repo.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 import 'package:trivo/screens/screen_Login.dart';
-import 'package:trivo/widgets/w_bottomNavbar.dart';
+import 'package:trivo/widgets/w_bottomnavbar.dart';
 
 // ignore: must_be_immutable
 class GetStarted extends StatelessWidget {
@@ -11,33 +11,32 @@ class GetStarted extends StatelessWidget {
 
   bool logedin;
 
-  check(context) async {  
+  check(context) async {
     if (logedin) {
-
       await Future.delayed(const Duration(seconds: 4));
       Navigator.pushAndRemoveUntil(
-          context, MaterialPageRoute(builder: (context) => const Navbar()),(route)=>false);
-    } else { 
+          context,
+          MaterialPageRoute(builder: (context) => const Navbar()),
+          (route) => false);
+    } else {
       Repository().getRandomDestinations();
-      await Future.delayed(const Duration(seconds: 4  ));
+      await Future.delayed(const Duration(seconds: 4));
       Navigator.pushAndRemoveUntil(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()),(route)=>false);
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+          (route) => false);
     }
   }
- 
-  @override 
+
+  @override
   Widget build(BuildContext context) {
     check(context);
     size(context);
-    // Repository().getRandomDestinations();
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(color: Colors.white
-            // image: DecorationImage(
-            //     image: AssetImage('assets/getstart.jpg'), fit: BoxFit.cover)
-            ),
+        decoration: const BoxDecoration(color: Colors.white),
         child: Align(
           alignment: const Alignment(0.0, 0.0),
           child: Column(
@@ -62,7 +61,6 @@ class GetStarted extends StatelessWidget {
                   ),
                 ),
               ),
-              // const Text('Your travel Advisor'),
               const Text('The world at your finger tips.'),
               const SizedBox(
                 height: 12,

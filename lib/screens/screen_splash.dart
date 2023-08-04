@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/database/functions/Firebase/db_repository.dart';
-import 'package:trivo/screens/screen_Login.dart';
+import 'package:trivo/screens/screen_login.dart';
 import 'package:trivo/widgets/w_bottomnavbar.dart';
 
 // ignore: must_be_immutable
@@ -61,8 +61,8 @@ class GetStarted extends StatelessWidget {
                   ),
                 ),
               ),
-              const Text('The world at your finger tips.'),
-              const SizedBox(
+              const Text('The world at your finger tips.'), 
+              const SizedBox( 
                 height: 12,
               ),
               gap,

@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/screens/admin/screens/admin_homepage.dart';
-import 'package:trivo/screens/screen_Login.dart';
+import 'package:trivo/screens/screen_login.dart';
 import 'package:trivo/widgets/w_bottomnavbar.dart';
 
 class F_authentication {

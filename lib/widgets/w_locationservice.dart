@@ -13,19 +13,15 @@ class LocationService {
 
     var response = await http.get(Uri.parse(url));
     var json = convert.jsonDecode(response.body);
-
-    print(json['candidates']);
     if (json['candidates'] == null || json['candidates'].isEmpty) {
       throw Exception('No place ID found for the given input.');
     }
     var placeId = json['candidates'][0]['place_id'] as String;
-    print(placeId);
     return placeId;
   }
 
   Future<Map<String, dynamic>> getPlace(String input) async {
     final placeId = await getPlaceId(input);
-    print(placeId);
 
     final String url =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$_apiKey';
@@ -34,7 +30,6 @@ class LocationService {
     var json = convert.jsonDecode(response.body);
     var results = json['result'] as Map<String, dynamic>;
 
-    print(results);
     return results;
   }
 }

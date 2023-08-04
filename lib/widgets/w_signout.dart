@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_userprofile.dart';
-import 'package:trivo/screens/screen_Login.dart';
+import 'package:trivo/screens/screen_login.dart';
 
 signout(BuildContext context) async {
   ProfileFirebase profileFirebase = ProfileFirebase();

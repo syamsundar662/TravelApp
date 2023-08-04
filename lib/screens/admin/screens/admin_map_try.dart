@@ -46,7 +46,6 @@ class MapSampleState extends State<MapSample> {
                     textCapitalization: TextCapitalization.words,
                     decoration: const InputDecoration(hintText: 'Enter place'),
                     onChanged: (value) {
-                      print(value);
                     },
                   ),
                 ),
@@ -56,12 +55,13 @@ class MapSampleState extends State<MapSample> {
                       var placeDetails = await LocationService(
                               'AIzaSyDRCUR8N7Upq6to_byI9gynQwzZMKYmpqI')
                           .getPlace(_textController.text);
+                      // ignore: avoid_print
                       print(placeDetails);
                     } catch (e) {
-                      print('Error: $e');
+                      // ignore: use_build_context_synchronously
                       showDialog(
                         context: context,
-                        builder: (context) {
+                        builder: (context) { 
                           return AlertDialog(
                             title: const Text('Error'),
                             content: const Text(

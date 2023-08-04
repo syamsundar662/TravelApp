@@ -7,8 +7,8 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
 import 'package:trivo/database/functions/Firebase/db_repository.dart';
-import 'package:trivo/screens/admin/screens/admin_editPlaces.dart';
-import 'package:trivo/screens/admin/screens/map_try.dart';
+import 'package:trivo/screens/admin/screens/admin_editplaces.dart';
+import 'package:trivo/screens/admin/screens/admin_map_try.dart';
 import 'package:trivo/widgets/w_bottomnavbar.dart';
 import 'package:trivo/widgets/w_signout.dart';
 

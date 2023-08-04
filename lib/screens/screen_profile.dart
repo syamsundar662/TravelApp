@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:smart_snackbars/enums/animate_from.dart';
 import 'package:smart_snackbars/smart_snackbars.dart';
 import 'package:trivo/database/functions/Firebase/db_userprofile.dart';
@@ -143,213 +144,224 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: SingleChildScrollView(
-            child: SizedBox(
-              child: SizedBox(
-                height: screenHeight,
-                width: screenWidth,
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Align(
-                          child: InkWell(
-                            onTap: () async {
-                              setState(() {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Dialog(
-                                          insetPadding:
-                                              const EdgeInsets.all(40),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(40)),
-                                          child: Container(
-                                            height: 300,
-                                            width: 200,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: SizedBox( 
+              height: screenHeight/1.2,
+              width: screenWidth,
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Align(
+                        child: InkWell(
+                          onTap: () async {
+                            setState(() {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                        insetPadding:
+                                            const EdgeInsets.all(40),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        child: Container(
+                                          height: 300,
+                                          width: 200,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: Center(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                InkWell(
+                                                  onTap: () async {
+                                                    await _pickImage();
+                                                  },
+                                                  child: url.imageURLdb !=
+                                                          null
+                                                      ? CircleAvatar(
+                                                          radius: 80,
+                                                          backgroundImage:
+                                                              CachedNetworkImageProvider(
+                                                                  url.imageURLdb!),
+                                                        )
+                                                      : _image != null
+                                                          ? CircleAvatar(
+                                                              radius: 80,
+                                                              backgroundImage:
+                                                                  FileImage(
+                                                                      _image!))
+                                                          : CircleAvatar(
+                                                              radius: 80,
+                                                              child: Image.asset(
+                                                                  'assets/profile-icon-design-free-vector (1).jpg')),
+                                                ),
+                                                gap,
+                                                Text(umail)
+                                              ],
                                             ),
-                                            child: Center(
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () async {
-                                                      await _pickImage();
-                                                    },
-                                                    child: url.imageURLdb !=
-                                                            null
-                                                        ? CircleAvatar(
-                                                            radius: 80,
-                                                            backgroundImage:
-                                                                CachedNetworkImageProvider(
-                                                                    url.imageURLdb!),
-                                                          )
-                                                        : _image != null
-                                                            ? CircleAvatar(
-                                                                radius: 80,
-                                                                backgroundImage:
-                                                                    FileImage(
-                                                                        _image!))
-                                                            : CircleAvatar(
-                                                                radius: 80,
-                                                                child: Image.asset(
-                                                                    'assets/profile-icon-design-free-vector (1).jpg')),
-                                                  ),
-                                                  gap,
-                                                  Text(umail)
-                                                ],
-                                              ),
-                                            ),
-                                          ));
-                                    });
-                              });
-                            },
-                            child: url.imageURLdb != null
-                                ? CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: CachedNetworkImageProvider(
-                                        url.imageURLdb!),
-                                  )
-                                : _image != null
-                                    ? CircleAvatar(
-                                        radius: 60,
-                                        backgroundImage: FileImage(_image!))
-                                    : CircleAvatar(
-                                        radius: 60,
-                                        child: Image.asset(
-                                            'assets/profile-icon-design-free-vector (1).jpg')),
-                          ),
-                        ),
-                        Text(
-                          profilename,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 25),
-                        ),
-                        Text(umail),
-                        TextButton(
-                          onPressed: () async {
-                            url.imageURLdb = null;
-                            await _pickImage();
+                                          ),
+                                        ));
+                                  });
+                            });
                           },
-                          child: const Text('Add or edit avatar'),
+                          child: url.imageURLdb != null
+                              ? CircleAvatar(
+                                  radius: 60,
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      url.imageURLdb!),
+                                )
+                              : _image != null
+                                  ? CircleAvatar(
+                                      radius: 60,
+                                      backgroundImage: FileImage(_image!))
+                                  : CircleAvatar(
+                                      radius: 60,
+                                      child: Image.asset(
+                                          'assets/profile-icon-design-free-vector (1).jpg')),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ContactUsPage())),
-                            child: const Text(
-                              'Contact Us',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 56, 56, 56),
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          const Text(''),
-                          InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        TermsAndConditionsPage())),
-                            child: const Text(
-                              'Terms and Conditions',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 56, 56, 56),
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          const Text(''),
-                          InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const PrivacyPolict())),
-                            child: const Text(
-                              'Privacy Policy',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 56, 56, 56),
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          const Text(''),
-                          InkWell(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AboutUsPage())),
-                            child: const Text(
-                              'About Us',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 56, 56, 56),
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                          const Divider(
-                            thickness: 1,
-                          ),
-                          const Text(''),
-                          InkWell(
-                            onTap: () async {
-                              await signout(context);
-                              setState(() {});
-                            },
-                            child: const Text(
-                              'Logout',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color.fromARGB(255, 56, 56, 56),
-                                  fontWeight: FontWeight.w200),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [Text('Version 1.0')],
+                      Text(
+                        profilename,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 25),
                       ),
-                    )
-                  ],
-                ),
+                      Text(umail),
+                      TextButton(
+                        onPressed: () async {
+                          url.imageURLdb = null;
+                          await _pickImage();
+                        },
+                        child: const Text('Add or edit avatar'),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ContactUsPage())),
+                          child: const Text(
+                            'Contact Us',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        gap,
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const TermsAndConditionsPage())),
+                          child: const Text(
+                            'Terms and Conditions',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        gap,
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PrivacyPolict())),
+                          child: const Text(
+                            'Privacy Policy',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        gap,
+                        InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AboutUsPage())),
+                          child: const Text(
+                            'About Us',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                        gap,
+                        InkWell(
+                          onTap: ()async {
+                             final box = context.findRenderObject() as RenderBox?;
+                      await Share.share('https://play.google.com/store/apps/details?id=com.waywizard.travisor',
+                      subject: '',
+                      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+                            
+                          },
+                          child: const Text(
+                            'Share',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                        const Divider(
+                          thickness: 1,
+                        ),
+                       gap,
+                        InkWell(
+                          onTap: () async {
+                            await signout(context);
+                            setState(() {});
+                          },
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 56, 56, 56),
+                                fontWeight: FontWeight.w200),
+                          ),
+                        ),
+                      ], 
+                    ),
+                  ),
+                  SizedBox(height: screenHeight/5,) ,
+                  const Text('Version 1.0')
+                ],
               ),
             ),
           ),

@@ -48,12 +48,8 @@ class ProfileFirebase {
             userId, // You can set the username to the user's ID or fetch it from the user profile
         'imageUrl': imageUrl,
       });
-      // profileImageProvider.setImageUrl(imageUrl);
-      print('Profile image uploaded and URL stored in Firebase!');
-      print(imageUrl);
     } else if (imageUrl == null) {
     } else {
-      print('Error uploading profile image.');
     }
   }
 
@@ -67,7 +63,6 @@ class ProfileFirebase {
       querySnapshotData = docSnapshot.data();
       imageURLdb = querySnapshotData!['imageUrl'] as String;
     } else {
-      print('User document does not exist.');
     }
   }
 }

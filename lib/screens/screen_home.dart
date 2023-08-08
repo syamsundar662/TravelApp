@@ -13,6 +13,7 @@ import 'package:trivo/screens/screen_profile.dart';
 import 'package:trivo/screens/screen_searchpage.dart';
 import 'package:trivo/widgets/w_homecarousel1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -89,14 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
           centerTitle: true,
-          title: const Row(
-            children: [
-              Text(
+          title:  Row(
+            children: [ 
+              Text(  
                 'Discover',
-                style: TextStyle(
-                    fontSize: 37,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black),
+                style:  GoogleFonts.ubuntu(
+                  textStyle: const TextStyle( fontWeight: FontWeight.w600,color: Colors.black,fontSize: 33)),
               ),
             ],
           ),),

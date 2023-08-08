@@ -29,6 +29,49 @@
             {
               "client_id": "818073158552-kn0bfjriatod3ccm811vta6aia75qndg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "818073158552-4t3jvpfu7qeu2ssqjq135dis8soa08j9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trivo"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818073158552:android:7c14dbac80b6d7474721ed",
+        "android_client_info": {
+          "package_name": "com.waywizard.travisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818073158552-kn0bfjriatod3ccm811vta6aia75qndg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjcMzCfHMpnZ0TwWFEBDBbOWekjewlIzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818073158552-kn0bfjriatod3ccm811vta6aia75qndg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "818073158552-4t3jvpfu7qeu2ssqjq135dis8soa08j9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.trivo"
+              }
             }
           ]
         }

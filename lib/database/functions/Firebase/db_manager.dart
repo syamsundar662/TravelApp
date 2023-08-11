@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 ValueNotifier<List<DestinationFB>> dataListFromFirebase = ValueNotifier([]);
 
@@ -57,6 +57,8 @@ class DataManager with ChangeNotifier {
       image: List<String>.from(document['image']),
       reachthere: document['moreInFo'],
       id: document['id'],
+      longitude: document['lon'],
+      latitude: document['lat']
     );
   }
 
@@ -73,6 +75,8 @@ class DataManager with ChangeNotifier {
           category: data['catogory'],
           description: data['description'],
           reachthere: data['moreInFo'],
+          latitude: data['lat'],
+          longitude: data['lon'],
           image: List<String>.from(data['image']));
     }).toList();
   }

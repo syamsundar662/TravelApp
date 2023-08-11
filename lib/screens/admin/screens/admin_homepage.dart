@@ -1,13 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/functions/Firebase/db_manager.dart';
 import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/screens/admin/screens/admin_addplaces.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
-import 'package:trivo/screens/admin/screens/admin_editPlaces.dart';
-import 'package:trivo/widgets/w_bottomNavbar.dart';
-import 'package:trivo/widgets/w_showdialogue.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
+import 'package:trivo/screens/admin/screens/admin_editplaces.dart';
+import 'package:trivo/screens/admin/screens/admin_map_try.dart';
+import 'package:trivo/widgets/w_bottomnavbar.dart';
+import 'package:trivo/widgets/w_signout.dart';
 
 bool isListEmpty = true;
 
@@ -23,7 +26,6 @@ class _AdminhomeState extends State<Adminhome> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Repository().getalldatas();
   }
@@ -35,6 +37,12 @@ class _AdminhomeState extends State<Adminhome> {
         automaticallyImplyLeading: false,
         title: const Text('Admin panel'),
         actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const MapSample()));
+              },
+              icon: const Icon(Icons.map)),
           TextButton(
             onPressed: () {
               showDialog(
@@ -112,9 +120,14 @@ class _AdminhomeState extends State<Adminhome> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                data.placeName,
-                                style: const TextStyle(fontSize: 15),
+                              SizedBox(
+                                width: 120,
+                                child: Text(
+                                  data.placeName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 15),
+                                ),
                               ),
                               Row(
                                 children: [

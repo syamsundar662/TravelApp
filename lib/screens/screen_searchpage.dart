@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trivo/database/models/fb_model.dart';
+import 'package:trivo/favourites/favourites_icons.dart';
 import 'package:trivo/favourites/favourites_models.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_categories.dart';
 import 'package:trivo/lists/list_districts.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
-import 'package:trivo/screens/screen_searchFullscreen.dart';
-import 'package:trivo/widgets/w_filterList.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
+import 'package:trivo/screens/screen_searchfullscreen.dart';
+import 'package:trivo/widgets/w_filterlist.dart';
 
 class Searchpage extends StatefulWidget {
   const Searchpage({
@@ -31,7 +32,6 @@ class _SearchpageState extends State<Searchpage> {
   void initState() {
     super.initState();
     FavoriteModel().favoritesListenable;
-
     getFiltered();
   }
 
@@ -42,14 +42,15 @@ class _SearchpageState extends State<Searchpage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(136),
+        preferredSize: const Size.fromHeight(135),
         child: SafeArea(
           bottom: false,
           child: AppBar(
             flexibleSpace: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 54,
+                  height: 53,
                 ),
                 FilterSelecter(
                   list: categories,
@@ -88,7 +89,7 @@ class _SearchpageState extends State<Searchpage> {
             }).toList();
 
             return dataEx.isEmpty
-                ? const Center(child: Text('No result!'))
+                ? const Center(child: CircularProgressIndicator())
                 : Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
                     child: RefreshIndicator(
@@ -96,94 +97,112 @@ class _SearchpageState extends State<Searchpage> {
                         await getFiltered();
                         setState(() {});
                       },
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 3 / 1.8,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12.0,
-                          mainAxisSpacing: 12.0,
-                        ),
-                        itemCount: dataEx.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          var data = dataEx[index];
-                          return InkWell(
-                            onTap: () {  
-                                Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SearchDetailsPage(datas: data),),);
-                            },
-                            child: Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: CachedNetworkImageProvider(
-                                          data.image[0]),
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
+                      child: SizedBox(
+                        height: screenHeight,
+                        width: screenWidth,
+                        child: GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            childAspectRatio: 3 / 1.8,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12.0,
+                            mainAxisSpacing: 12.0,
+                          ),
+                          itemCount: dataEx.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var data = dataEx[index];
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SearchDetailsPage(datas: data),
                                   ),
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
-                                    gradient: LinearGradient(
-                                      begin: FractionalOffset.center,
-                                      end: FractionalOffset.bottomCenter,
-                                      colors: [
-                                        const Color.fromARGB(255, 0, 0, 0)
-                                            .withOpacity(0.0),
-                                        Colors.black.withOpacity(0.9),
-                                      ],
-                                      stops: const [0.0, 1.0],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 15, bottom: 15),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            data.placeName,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15,
-                                            ),
-                                          ),
-                                          Text(
-                                            data.district,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 231, 231, 231),
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          // IconFavorite(
-                                          //   destinationId: data.id! ,
-                                          //   size: 22,
-                                          // )
-                                        ],
+                                );
+                              },
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: CachedNetworkImageProvider(
+                                            data.image[0]),
                                       ),
-                                    ],
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                      gradient: LinearGradient(
+                                        begin: FractionalOffset.center,
+                                        end: FractionalOffset.bottomCenter,
+                                        colors: [
+                                          const Color.fromARGB(255, 0, 0, 0)
+                                              .withOpacity(0.0),
+                                          Colors.black.withOpacity(0.9),
+                                        ],
+                                        stops: const [0.0, 1.0],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, bottom: 15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: screenWidth / 3.4,
+                                              child: Text(
+                                                data.placeName,
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              data.district,
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 231, 231, 231),
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 10, bottom: 6),
+                                          child: IconFavorite(
+                                              destinationId: data.id!,
+                                              size: 25),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   );

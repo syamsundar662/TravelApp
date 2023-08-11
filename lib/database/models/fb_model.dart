@@ -1,4 +1,3 @@
-//  import 'dart:io';
 
 class DestinationFB {
   String placeName;
@@ -9,6 +8,8 @@ class DestinationFB {
   String? id;
   String reachthere;
   List<String> image;
+  String? latitude;
+  String? longitude;
 
   DestinationFB({
     required this.placeName,
@@ -19,6 +20,8 @@ class DestinationFB {
     required this.reachthere,
     this.id,
     required this.image,
+    required this.latitude,
+    required this.longitude
   });
 }
 

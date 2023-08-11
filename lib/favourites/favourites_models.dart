@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:trivo/database/models/fb_model.dart';
 
-final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+ 
+String currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
 class FavoriteModel extends ChangeNotifier {
   List<String> favorites = [];
@@ -37,6 +38,8 @@ class FavoriteModel extends ChangeNotifier {
             location: data['link'],
             description: data['description'],
             reachthere: data['moreInFo'],
+            longitude: data['lon'],
+            latitude: data['lat'],
             image: List<String>.from(data['image']),
           );
         })

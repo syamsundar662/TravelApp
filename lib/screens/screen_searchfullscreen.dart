@@ -13,22 +13,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
-class DetailsPage extends StatelessWidget {
-  DetailsPage({
+class SearchDetailsPage extends StatelessWidget {
+  SearchDetailsPage({
     Key? key,
     required this.datas,
   }) : super(key: key);
-  DestinationFB datas; 
-
+  DestinationFB datas;
   @override
   Widget build(BuildContext context) {
     final favoriteModel = Provider.of<FavoriteModel>(context);
     favoriteModel.initFavorites(currentUserId);
     List listImg = datas.image;
 
-      double lat = double.parse(datas.latitude ?? '0,0');
-      double lon = double.parse(datas.longitude ?? '0,0'); 
-
+    double lat = double.parse(datas.latitude ?? '');
+    double lon = double.parse(datas.longitude ?? '');
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -102,17 +100,16 @@ class DetailsPage extends StatelessWidget {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    datas.placeName,
-                                    style: const TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w500
+                                  SizedBox(
+                                    width: screenWidth / 1.2,
+                                    child: Text(
+                                      datas.placeName,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: bold3,
                                     ),
-                                       maxLines: 1,
-                                  overflow: TextOverflow.ellipsis  , 
                                   ),
                                   gapW5,
-                                  
                                 ],
                               ),
                               IconFavorite(
@@ -123,17 +120,17 @@ class DetailsPage extends StatelessWidget {
                           ),
                           Container(
                             decoration: BoxDecoration(
-                              border: Border.all(width: .8 ,color: Colors.grey ),
-                            
-                              borderRadius: BorderRadius.circular(10)
-                            ),
+                                border:
+                                    Border.all(width: .8, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 5,right: 5,bottom: 2,top: 2 ),
+                              padding: const EdgeInsets.only(
+                                  left: 5, right: 5, bottom: 2, top: 2),
                               child: Text(
-                                        datas.category,
-                                        style: const TextStyle(color: Colors.grey ),
-                                        // style: medium,
-                                      ),
+                                datas.category,
+                                style: const TextStyle(color: Colors.grey),
+                                // style: medium,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 8),
@@ -181,65 +178,61 @@ class DetailsPage extends StatelessWidget {
                       'Direction',
                       style: bold2,
                     ),
-                  ),
-                  Padding(
+                  ),Padding(
                     padding: const EdgeInsets.all(10),
                     child: SizedBox(
-                      height: screenHeight/3 ,
+                      height: screenHeight / 3,
                       width: double.infinity,
-                      child: ClipRRect( 
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: GoogleMap(
-                          scrollGesturesEnabled: false ,
-                          mapType: MapType.hybrid ,  
-                          myLocationButtonEnabled: true,
-                          myLocationEnabled: true, 
-                          zoomControlsEnabled: true, 
-                          zoomGesturesEnabled: true,
-                          initialCameraPosition:  CameraPosition(
-                            target: LatLng(lat,lon), 
-                            zoom: 14,
-                          ), 
-                          markers: { 
-                             Marker( 
-                              markerId: const MarkerId('marker_id'),
-                              position:
-                                  LatLng(lat,lon),
+                            mapType: MapType.hybrid,
+                            myLocationButtonEnabled: true,
+                            myLocationEnabled: true,
+                            zoomControlsEnabled: true,
+                            zoomGesturesEnabled: true,
+                            initialCameraPosition: CameraPosition(
+                              target: LatLng(lat, lon),
+                              zoom: 14,
                             ),
-                          }, 
-                          // ignore: prefer_collection_literals
-                          gestureRecognizers: Set()
-                           ..add(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))
-                          
-                          ),
+                            markers: {
+                              Marker(
+                                markerId: const MarkerId('marker_id'),
+                                position: LatLng(lat, lon),
+                              ),
+                            },
+                            // ignore: prefer_collection_literals
+                            gestureRecognizers: Set()
+                              ..add(Factory<PanGestureRecognizer>(
+                                  () => PanGestureRecognizer()))),
                       ),
                     ),
                   ),
                   Padding(
-                            padding: const EdgeInsets.only(left: 8,right: 8,bottom: 20),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: InkWell(
-                                onTap: () => launchGoogleMaps(datas.location),
-                                child: Container(
-                                  height: 50,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: const Color.fromARGB(255, 0, 0, 0),
-                                      borderRadius:
-                                          BorderRadius.circular(10)),
-                                  child: const Align(
-                                      child: Text(
-                                    'Get direction',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                ),
-                              ),
-                            ),
-                          )
+                    padding:
+                        const EdgeInsets.only(left: 8, right: 8, bottom: 20),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: InkWell(
+                        onTap: () => launchGoogleMaps(datas.location),
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Align(
+                              child: Text(
+                            'Get direction',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ],

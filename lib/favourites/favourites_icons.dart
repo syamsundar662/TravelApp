@@ -34,9 +34,11 @@ class _IconFavoriteState extends State<IconFavorite> {
   Widget build(BuildContext context) {
     final favoriteModel = Provider.of<FavoriteModel>(context);
 
-    return InkWell(
-      onTap: ()  {
+    return InkWell( 
+      onTap: () async {
         favoriteChanger(context);
+              await favoriteModel.initFavorites(currentUserId);
+              setState(() {});
       },
       child: favoriteModel.favorites.contains(widget.destinationId)
           ? Icon(

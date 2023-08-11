@@ -6,7 +6,7 @@ import 'package:trivo/database/models/fb_model.dart';
 import 'package:trivo/helper/helper_size.dart';
 import 'package:trivo/lists/list_districts.dart';
 import 'package:trivo/lists/list_categories.dart';
-import 'package:trivo/screens/admin/screens/db_admin.dart';
+import 'package:trivo/database/functions/Firebase/db_repository.dart';
 
 bool isListEmpty = true;
 bool load = false;
@@ -31,12 +31,16 @@ class _AddPlacesState extends State<AddPlaces> {
   final descriptionController = TextEditingController();
   final locationController = TextEditingController();
   final reachthereController = TextEditingController();
+  final latcontroller = TextEditingController();
+  final loncontroller = TextEditingController();
 
   Repository repos = Repository();
 
   final picker = ImagePicker();
   List<XFile> pickedImages = [];
 
+  // String latitudetext =latcontroller.text;
+  // String longitudetext = loncontroller.text;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -144,6 +148,24 @@ class _AddPlacesState extends State<AddPlaces> {
                             borderRadius: BorderRadius.circular(20)),
                       ),
                     ),
+                    verticalGap1,
+                    TextField(
+                      controller: latcontroller,
+                      decoration: InputDecoration(
+                        hintText: 'Lat',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                    verticalGap1,
+                    TextField(
+                      controller: loncontroller,
+                      decoration: InputDecoration(
+                        hintText: 'Log',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
                     TextButton.icon(
                       icon: const Icon(Icons.add_circle_outline_sharp),
                       label: const Text('Add images'),
@@ -201,7 +223,7 @@ class _AddPlacesState extends State<AddPlaces> {
                         ? const CupertinoActivityIndicator()
                         : ElevatedButton(
                             onPressed: () async {
-                              submitChecking(context); 
+                              submitChecking(context);
                             },
                             child: const Text('submit')),
                   ],
@@ -245,7 +267,9 @@ class _AddPlacesState extends State<AddPlaces> {
         locationController.text.isEmpty ||
         descriptionController.text.isEmpty ||
         pickedImages.isEmpty ||
-        reachthereController.text.isEmpty) {
+        reachthereController.text.isEmpty ||
+        latcontroller.text.isEmpty ||
+        loncontroller.text.isEmpty) {
       showDialog(
         context: context,
         builder: (context) => const AlertDialog(
@@ -257,6 +281,9 @@ class _AddPlacesState extends State<AddPlaces> {
     } else {
       List<File> selectedpick = [];
       List<String> selectedpickpath = [];
+      String latcor = latcontroller.text;
+      String loncor = loncontroller.text;
+
       // ignore: avoid_function_literals_in_foreach_calls
       pickedImages.forEach((element) {
         selectedpickpath.add(File(element.path).path);
@@ -265,6 +292,7 @@ class _AddPlacesState extends State<AddPlaces> {
       pickedImages.forEach((element) {
         selectedpick.add(File(element.path));
       });
+
       final destination = DestinationFB(
           placeName: placeNameController.text,
           location: locationController.text,
@@ -272,9 +300,12 @@ class _AddPlacesState extends State<AddPlaces> {
           reachthere: reachthereController.text,
           image: selectedpickpath,
           district: selectedDistrictvalue!,
-          category: selectedCategoryvalue!);
+          category: selectedCategoryvalue!,
+          latitude: latcor,
+          longitude: loncor);
 
-      await repos.fb_addDestination(destination);
+      await repos.fbaddDestination(destination);
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('Added successfully')));
       // clearform();
